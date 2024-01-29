@@ -24,23 +24,20 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
-@Autonomous(name = "AutoBlueFar", group = ":3")
-public class AutoBlueFar extends LinearOpMode {
+@Autonomous(name = "AutoBlueClose", group = ":3")
+public class AutoBlueClose extends LinearOpMode {
 
     int s = 1;
 
-    final private Pose2d startPose = new Pose2d(-36.0, 60*s, Math.toRadians(-90.0 * s));
+    private Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
 
     private DcMotorEx arm;
 
-
-
-    private SampleMecanumDrive drive;
+    private final SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
     private TouchSensor touch;
 
     public void arminit() {
-
         arm = (DcMotorEx) hardwareMap.get(DcMotorEx.class, "arm");
         touch = hardwareMap.get(TouchSensor.class, "touch");
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -57,6 +54,7 @@ public class AutoBlueFar extends LinearOpMode {
         }
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
     }
 
     @Override
@@ -104,7 +102,6 @@ public class AutoBlueFar extends LinearOpMode {
 //        while (!isStopRequested() && !opModeIsActive()) {
 //
 
-        drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setPoseEstimate(startPose);
 
@@ -150,20 +147,22 @@ public class AutoBlueFar extends LinearOpMode {
 
 
             return drive.trajectorySequenceBuilder(startPose)
-                .addTemporalMarker(4.0, () -> {
+                    .addTemporalMarker(2.0, () -> {
 //                                                todo: start extending the arm here
-                    arm.setTargetPosition(-24500);
-                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                arm.setPower(1.0);
-                })
-                .splineToSplineHeading(spikePose, spikePose.getHeading())
+                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                        arm.setPower(1.0);
+                        arm.setTargetPosition(-24500);
+                    })
+                    .splineToSplineHeading(spikePose, spikePose.getHeading())
 //                                .forward(7)
 //                                .back(7)
-                .splineToSplineHeading(new Pose2d(startPose.getX(), Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
-                .splineToConstantHeading(new Vector2d(-24, startPose.getY()), 0.0)
-                .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))
-                .splineToSplineHeading(tagPose, tagPose.getHeading())
-                .build();
+                    .lineToSplineHeading(new Pose2d(startPose.getX(), Math.copySign(48.0, startPose.getY()), startPose.getHeading()))
+//                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
+                    .splineToConstantHeading(new Vector2d(24, startPose.getY()), 0.0)
+//                                            .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
+                    .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))
+                    .splineToSplineHeading(tagPose, tagPose.getHeading())
+                    .build();
         } else {
             double heading = startPose.getHeading();
 
@@ -174,11 +173,11 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d tagPose = new Pose2d(48.0, Math.copySign(28.0, startPose.getY()) + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
-                    .addTemporalMarker(4.0, () -> {
+                    .addTemporalMarker(2.0, () -> {
                         //todo: start extending the arm here
-                        arm.setTargetPosition(-24500);
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
+                        arm.setTargetPosition(-24500);
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     //                                .forward(7)
