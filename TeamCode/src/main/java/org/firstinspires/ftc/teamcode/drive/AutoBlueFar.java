@@ -26,11 +26,13 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "AutoBlueFar", group = ":3")
 public class AutoBlueFar extends LinearOpMode {
 
-    static Pose2d startPose = new Pose2d(-36.0, 60, Math.toRadians(-90.0));
+    private Pose2d startPose = new Pose2d(-36.0, 60, Math.toRadians(-90.0));
 
-    static Vector2d spikeVec = new Vector2d(startPose.getX(), startPose.getY()-23.0);
+    private Vector2d spikeVec = new Vector2d(startPose.getX(), startPose.getY()-23.0);
 
     private DcMotorEx arm;
+
+    private final SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
 
     private TouchSensor touch;
 
@@ -56,7 +58,7 @@ public class AutoBlueFar extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+
 
         drive.setPoseEstimate(startPose);
 
