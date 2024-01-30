@@ -5,6 +5,7 @@ package org.firstinspires.ftc.teamcode.auto;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.TouchSensor;
@@ -26,7 +27,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List;
 
 @Autonomous(name = "5276 RedCloseAuto")
-public class RedCloseAuto extends encoderdrive {
+public class RedCloseAuto extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -85,7 +86,7 @@ public class RedCloseAuto extends encoderdrive {
     @Override
     public void runOpMode() {
 
-        boolean driver = driveinit();
+//        boolean driver = driveinit();
 
         initTfod();
 
@@ -96,7 +97,7 @@ public class RedCloseAuto extends encoderdrive {
         arminit();
 
         while (opModeInInit()) {
-            telemetry.addData("Drive ok?", "%s", driver);
+            telemetry.addData("Drive ok?", "%s", drive != null);
             telemetry.addData("Beacon?", "%s", !tfod.getRecognitions().isEmpty());
             telemetry.update();
         }
@@ -227,76 +228,76 @@ public class RedCloseAuto extends encoderdrive {
     /**
      * Add telemetry about AprilTag detections.
      */
-    private void telemetryAprilTag() {
-
-        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
-        telemetry.addData("# AprilTags Detected", currentDetections.size());
-
-        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
-        // Step through the list of detections and display info for each one.
-        for (AprilTagDetection detection : currentDetections) {
-            if (detection.metadata != null) {
-                if (detection.id == id) {
-                    telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
-                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (MM)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
-                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
-                    telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (MM, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
-                    if (detection.ftcPose.y <= 500) {
-                        reset();
-                        visionPortal.setProcessorEnabled(aprilTag, false);
-                        runOffset(detection.ftcPose.x + 180, detection.ftcPose.y - 180, -detection.ftcPose.yaw);
-                        arm.setTargetPosition(-24000);
-                        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        ((DcMotorEx) arm).setTargetPositionTolerance(10);
-                        arm.setPower(1);
-                        while (arm.isBusy()) {
-                            telemetry.addData("", "%s", arm.getCurrentPosition());
-                            telemetry.update();
-                            sleep(20);
-                            idle();
-                        }
-                        sleep(1000);
-                        arm.setTargetPosition(0);
-                        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-                        arm.setPower(1);
-                        while (!touch.isPressed()) {
-                            telemetry.addData("", "%s", arm.getCurrentPosition());
-                            telemetry.update();
-                            sleep(20);
-                            idle();
-                        }
-                        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-                        break;
-                    } else {
-                        backleft.setVelocity(800.0);
-                        backright.setVelocity(800.0);
-                        frontleft.setVelocity(800.0); //DRIFTING ADJUST
-                        frontright.setVelocity(800.0);
-                    }
-                }
-            } else {
-                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
-                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
-            }
-        }   // end for() loop
-
-        if (currentDetections.isEmpty()) {
-            backleft.setVelocity(800.0);
-            backright.setVelocity(800.0);
-            frontleft.setVelocity(800.0);
-            frontright.setVelocity(800.0);
-        }
-
-        // Add "key" information to telemetry
-        telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
-        telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
-        telemetry.addLine("RBE = Range, Bearing & Elevation");
-
-    }   // end method telemetryAprilTag()
+//    private void telemetryAprilTag() {
+//
+//        List<AprilTagDetection> currentDetections = aprilTag.getDetections();
+//        telemetry.addData("# AprilTags Detected", currentDetections.size());
+//
+//        backleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        backright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        frontleft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//        frontright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//        // Step through the list of detections and display info for each one.
+//        for (AprilTagDetection detection : currentDetections) {
+//            if (detection.metadata != null) {
+//                if (detection.id == id) {
+//                    telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
+//                    telemetry.addLine(String.format("XYZ %6.1f %6.1f %6.1f  (MM)", detection.ftcPose.x, detection.ftcPose.y, detection.ftcPose.z));
+//                    telemetry.addLine(String.format("PRY %6.1f %6.1f %6.1f  (deg)", detection.ftcPose.pitch, detection.ftcPose.roll, detection.ftcPose.yaw));
+//                    telemetry.addLine(String.format("RBE %6.1f %6.1f %6.1f  (MM, deg, deg)", detection.ftcPose.range, detection.ftcPose.bearing, detection.ftcPose.elevation));
+//                    if (detection.ftcPose.y <= 500) {
+//                        reset();
+//                        visionPortal.setProcessorEnabled(aprilTag, false);
+//                        runOffset(detection.ftcPose.x + 180, detection.ftcPose.y - 180, -detection.ftcPose.yaw);
+//                        arm.setTargetPosition(-24000);
+//                        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                        ((DcMotorEx) arm).setTargetPositionTolerance(10);
+//                        arm.setPower(1);
+//                        while (arm.isBusy()) {
+//                            telemetry.addData("", "%s", arm.getCurrentPosition());
+//                            telemetry.update();
+//                            sleep(20);
+//                            idle();
+//                        }
+//                        sleep(1000);
+//                        arm.setTargetPosition(0);
+//                        arm.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+//                        arm.setPower(1);
+//                        while (!touch.isPressed()) {
+//                            telemetry.addData("", "%s", arm.getCurrentPosition());
+//                            telemetry.update();
+//                            sleep(20);
+//                            idle();
+//                        }
+//                        arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+//                        break;
+//                    } else {
+//                        backleft.setVelocity(800.0);
+//                        backright.setVelocity(800.0);
+//                        frontleft.setVelocity(800.0); //DRIFTING ADJUST
+//                        frontright.setVelocity(800.0);
+//                    }
+//                }
+//            } else {
+//                telemetry.addLine(String.format("\n==== (ID %d) Unknown", detection.id));
+//                telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
+//            }
+//        }   // end for() loop
+//
+//        if (currentDetections.isEmpty()) {
+//            backleft.setVelocity(800.0);
+//            backright.setVelocity(800.0);
+//            frontleft.setVelocity(800.0);
+//            frontright.setVelocity(800.0);
+//        }
+//
+//        // Add "key" information to telemetry
+//        telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
+//        telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
+//        telemetry.addLine("RBE = Range, Bearing & Elevation");
+//
+//    }   // end method telemetryAprilTag()
     /**
      * Add telemetry about TensorFlow Object Detection (TFOD) recognitions.
      */
