@@ -10,7 +10,7 @@ public class MeepMeepTestingFar {
 
 
     // Set true if robot starts on red side, false if robot starts on blue side
-    static boolean red = false;
+    static boolean red = true;
 
     static int s = red ? -1 : 1;
     static Pose2d startPose = new Pose2d(-36.0, 60*s, Math.toRadians(-90.0 * s));
@@ -18,7 +18,7 @@ public class MeepMeepTestingFar {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        double angle = 0.0;
+        double angle = -20.0;
         RoadRunnerBotEntity myBot;
 
         double tag = -7.5;
@@ -26,7 +26,7 @@ public class MeepMeepTestingFar {
         if (!(angle >= -15.0 && angle <= 15.0)) {
             double heading = startPose.getHeading() - Math.copySign(Math.toRadians(30.0), angle);
 
-            double x = startPose.getX() - Math.copySign(12.0, angle) + Math.copySign(9.0 * Math.cos(heading), angle);
+            double x = startPose.getX() - Math.copySign(12.0, startPose.getY()) + Math.copySign(9.0 * Math.cos(heading), startPose.getY());
             double y = Math.copySign(24.0, startPose.getY()) + Math.copySign(9.0 * Math.sin(heading), startPose.getY());
 
 
