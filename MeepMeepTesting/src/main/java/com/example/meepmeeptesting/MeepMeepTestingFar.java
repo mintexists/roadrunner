@@ -24,7 +24,7 @@ public class MeepMeepTestingFar {
         double tag = -7.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
-            double heading = startPose.getHeading() - Math.copySign(Math.toRadians(30.0), angle);
+            double heading = startPose.getHeading() + Math.copySign(Math.toRadians(30.0), angle);
 
             double x = startPose.getX() - Math.copySign(12.0, startPose.getY()) + Math.copySign(9.0 * Math.cos(heading), startPose.getY());
             double y = Math.copySign(24.0, startPose.getY()) + Math.copySign(9.0 * Math.sin(heading), startPose.getY());
