@@ -113,7 +113,7 @@ public class AutoBlueFar extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectorySequence(auto(0.0));
+        drive.followTrajectorySequence(auto(20.0));
 
 
         while (opModeIsActive()) {
@@ -148,13 +148,14 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(58.0, 36.0 * s + tag, 0.0);
 
 
             return drive.trajectorySequenceBuilder(startPose)
-
                     .addTemporalMarker(2.0, () -> {
-                        //todo: start extending the arm here
+                        arm.setTargetPosition(-24500);
+                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                        arm.setPower(1.0);
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
 //                                .forward(7)
@@ -175,10 +176,12 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(58.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(2.0, () -> {
-                        //todo: start extending the arm here
+                        arm.setTargetPosition(-24500);
+                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                        arm.setPower(1.0);
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
 //                                .forward(7)
