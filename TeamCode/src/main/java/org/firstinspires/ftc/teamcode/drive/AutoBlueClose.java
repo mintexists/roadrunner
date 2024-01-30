@@ -31,7 +31,7 @@ public class AutoBlueClose extends LinearOpMode {
 
     private static Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
 
-    private DcMotorEx arm;
+    private static DcMotorEx arm;
 
     private static SampleMecanumDrive drive;
 

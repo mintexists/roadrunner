@@ -31,9 +31,7 @@ public class AutoBlueFar extends LinearOpMode {
 
     static private Pose2d startPose = new Pose2d(-36.0, 65 *s, Math.toRadians(-90.0 * s));
 
-    private DcMotorEx arm;
-
-
+    private static DcMotorEx arm;
 
     static private SampleMecanumDrive drive;
 
