@@ -313,7 +313,7 @@ public class BlueCloseAuto extends LinearOpMode {
             double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
 
             if (recognition.getLabel().equals("Pixel")) {
-                drive.followTrajectorySequence(AutoBlueClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES)));
+                drive.followTrajectorySequence(AutoBlueClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
             }
 
             telemetry.addData(""," ");

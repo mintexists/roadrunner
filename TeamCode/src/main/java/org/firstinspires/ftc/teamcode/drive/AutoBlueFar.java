@@ -111,7 +111,7 @@ public class AutoBlueFar extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectorySequence(auto(20.0));
+        drive.followTrajectorySequence(auto(20.0, drive, arm));
 
 
         while (opModeIsActive()) {
@@ -125,7 +125,7 @@ public class AutoBlueFar extends LinearOpMode {
 
     }
 //return drive.trajectorySequenceBuilder(startPose)
-    public static TrajectorySequence auto(double angle) {
+    public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
         double tag = -7.5;
