@@ -312,7 +312,7 @@ public class RedCloseAuto extends LinearOpMode {
             double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
 
             if (recognition.getLabel().equals("Pixel")) {
-                drive.followTrajectorySequence(AutoRedClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES)));
+                drive.followTrajectorySequence(AutoRedClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
             }
 
             telemetry.addData(""," ");

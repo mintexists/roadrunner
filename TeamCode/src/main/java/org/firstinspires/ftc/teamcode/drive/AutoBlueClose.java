@@ -65,7 +65,7 @@ public class AutoBlueClose extends LinearOpMode {
 //
 //        arminit();
 //
-//        double angle = 20.0;
+//        double angle, SampleMecanumDrive drive, DcMotorEx arm = 20.0;
 //
 //        double heading = startPose.getHeading();
 //
@@ -111,7 +111,7 @@ public class AutoBlueClose extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectorySequence(auto(0.0));
+        drive.followTrajectorySequence(auto(0.0, drive, arm));
 
 
         while (opModeIsActive()) {
@@ -124,7 +124,7 @@ public class AutoBlueClose extends LinearOpMode {
         }
 
     }
-    public static TrajectorySequence auto(double angle) {
+    public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
         double tag = -7.5;
