@@ -22,11 +22,11 @@ public class MeepMeepTestingFar {
         double tag = -7.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
-            double heading = startPose.getHeading() - Math.toRadians(30.0)*a;
+            double heading = startPose.getHeading() - Math.toRadians(40.0)*a;
 //              * s
-            double x = startPose.getX() - 12.0 * a * s - + 9.0 * Math.cos(heading);
+            double x = startPose.getX() - 12.0 * a * s - + 7.0 * Math.cos(heading);
 //             + s * a *
-            double y = 24.0 * s - 9.0 * Math.sin(heading);
+            double y = 24.0 * s - 7.0 * Math.sin(heading);
 
 
             if (angle < -15.0) {
@@ -37,7 +37,7 @@ public class MeepMeepTestingFar {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(59.0, 36.0 * s + tag, 0.0);
 
 
             myBot = new DefaultBotBuilder(meepMeep)
@@ -53,7 +53,7 @@ public class MeepMeepTestingFar {
 //                                .back(7)
                                             .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
 //                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
-                                            .splineToConstantHeading(new Vector2d(-24, startPose.getY()), 0.0)
+                                            .splineToConstantHeading(new Vector2d(-30, startPose.getY()), 0.0)
                                             .lineTo(new Vector2d(24.0, startPose.getY()))
 //                                          .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
 //                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))

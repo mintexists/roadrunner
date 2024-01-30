@@ -313,7 +313,7 @@ public class BlueFarAuto extends LinearOpMode {
             double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
 
             if (recognition.getLabel().equals("Pixel")) {
-                drive.followTrajectorySequence(AutoBlueFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES)));
+                drive.followTrajectorySequence(AutoBlueFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive));
             }
 
             telemetry.addData(""," ");
