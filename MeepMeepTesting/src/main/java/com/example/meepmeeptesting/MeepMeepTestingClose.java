@@ -7,16 +7,12 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTestingClose {
-
-
-
-    static int s = 1;
+    static int s = -1;
     static Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
-
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(1000);
 
-        double angle = 20.0;
+        double angle = 0.0;
         int a = (angle < 0 ? -1 : 1);
         RoadRunnerBotEntity myBot;
 
@@ -88,7 +84,6 @@ public class MeepMeepTestingClose {
 //                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
                                             .splineToConstantHeading(new Vector2d(24, startPose.getY()), 0.0)
 //                                            .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
-                                            .lineTo(new Vector2d(24.0, startPose.getY()))
                                             .splineToSplineHeading(tagPose, Math.toRadians(0.0))
                                             .forward(2)
                                             .build()
