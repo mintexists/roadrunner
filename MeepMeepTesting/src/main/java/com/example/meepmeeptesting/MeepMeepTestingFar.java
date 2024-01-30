@@ -18,7 +18,7 @@ public class MeepMeepTestingFar {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        double angle = 20.0;
+        double angle = 0.0;
         RoadRunnerBotEntity myBot;
 
         double tag = -7.5;
@@ -57,7 +57,7 @@ public class MeepMeepTestingFar {
                                             .splineToConstantHeading(new Vector2d(-24, startPose.getY()), 0.0)
                                             .lineTo(new Vector2d(24.0, startPose.getY()))
 //                                          .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
-                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))
+//                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))
                                             .splineToSplineHeading(tagPose, tagPose.getHeading())
                                             .build()
                     );
@@ -69,7 +69,7 @@ public class MeepMeepTestingFar {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, Math.copySign(28.0, startPose.getY()) + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, Math.copySign(36.0, startPose.getY()) + tag, 0.0);
             myBot = new DefaultBotBuilder(meepMeep)
                     // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                     .setConstraints(41, 41, Math.toRadians(180), Math.toRadians(180), 16)
@@ -83,9 +83,10 @@ public class MeepMeepTestingFar {
 //                                .back(7)
                                     .lineToSplineHeading(new Pose2d(startPose.getX(), Math.copySign(48.0, startPose.getY()), startPose.getHeading()))
 //                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
-                                    .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
-//                                            .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
-                                    .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))
+                                    .splineToConstantHeading(new Vector2d(-24, startPose.getY()), 0.0)
+                                    .lineTo(new Vector2d(24.0, startPose.getY()))
+//                                          .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
+//                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))
                                     .splineToSplineHeading(tagPose, tagPose.getHeading())
                                     .build()
                     );
