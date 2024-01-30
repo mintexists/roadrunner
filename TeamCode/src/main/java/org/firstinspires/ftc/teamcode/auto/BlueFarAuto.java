@@ -25,7 +25,7 @@ import org.firstinspires.ftc.teamcode.drive.AutoBlueFar;
 
 import java.util.List;
 
-@Autonomous(name = "5276 Right Side Red")
+@Autonomous(name = "5276 BlueFarAuto")
 public class BlueFarAuto extends encoderdrive {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera

@@ -25,7 +25,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
-@Autonomous(name = "5276 Right Side Red")
+@Autonomous(name = "5276 BlueCloseAuto")
 public class BlueCloseAuto extends encoderdrive {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
