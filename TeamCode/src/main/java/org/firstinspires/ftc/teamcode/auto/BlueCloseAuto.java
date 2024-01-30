@@ -1,29 +1,32 @@
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.auto;
 
 // courtesy of Ruth 2024 :3
 // lemme know if this is legible or if theres a better way to do this :3
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.TouchSensor;
-import org.firstinspires.ftc.vision.tfod.TfodProcessor;
-import org.firstinspires.ftc.vision.VisionPortal;
+
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.drive.AutoBlueClose;
+import org.firstinspires.ftc.teamcode.drive.AutoBlueFar;
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.encoderdrive;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
 @Autonomous(name = "5276 Right Side Red")
-public class BlueFarAuto extends encoderdrive {
+public class BlueCloseAuto extends encoderdrive {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -82,14 +85,18 @@ public class BlueFarAuto extends encoderdrive {
     @Override
     public void runOpMode() {
 
-        boolean drive = driveinit();
+        boolean driver = driveinit();
 
         initTfod();
+
+        drive = new SampleMecanumDrive(hardwareMap);
+
+        drive.setPoseEstimate(startPose);
 
         arminit();
 
         while (opModeInInit()) {
-            telemetry.addData("Drive ok?", "%s", drive);
+            telemetry.addData("Drive ok?", "%s", driver);
             telemetry.addData("Beacon?", "%s", !tfod.getRecognitions().isEmpty());
             telemetry.update();
         }
@@ -304,27 +311,7 @@ public class BlueFarAuto extends encoderdrive {
             double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
 
             if (recognition.getLabel().equals("Pixel")) {
-                if (recognition.estimateAngleToObject(AngleUnit.DEGREES) < -15.0) {
-                    runOffset(0.0, 600.0, 0.0);
-                    runOffset(-190.0, 50.0, -90.0);
-                    runOffset(0.0, -220.0, 0.0);
-                    runOffset(-600.0, 0.0, 0.0);
-                    runOffset(0.0, 1300.0, 0.0);
-                    runOffset(500.0, 0.0, 0.0);
-                    id = 4;
-                } else if (recognition.estimateAngleToObject(AngleUnit.DEGREES) < 15.0) {
-                    runOffset(0.0, 780.0, 0);
-                    runOffset(0.0, -40.0, 0);
-                    runOffset(-1300.0, 0.0, -90.0);
-                    id = 5;
-                } else {
-                    runOffset(290.0, 780.0, 0);
-                    runOffset(-240.0, -300.0, 0);
-                    runOffset(-40.0, 130.0, -90.0);
-                    id = 6;
-                }
-                visionPortal.setProcessorEnabled(tfod, false);
-                visionPortal.setProcessorEnabled(aprilTag, true);
+                drive.followTrajectorySequence(AutoBlueClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES)));
             }
 
             telemetry.addData(""," ");

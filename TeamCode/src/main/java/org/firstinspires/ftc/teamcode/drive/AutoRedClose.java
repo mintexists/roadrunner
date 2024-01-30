@@ -17,13 +17,13 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "AutoRedClose", group = ":3")
 public class AutoRedClose extends LinearOpMode {
 
-    int s = -1;
+    static int s = -1;
 
-    private Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
+    private static Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
 
     private DcMotorEx arm;
 
-    private final SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+    private static SampleMecanumDrive drive;
 
     private TouchSensor touch;
 
@@ -92,6 +92,7 @@ public class AutoRedClose extends LinearOpMode {
 //        while (!isStopRequested() && !opModeIsActive()) {
 //
 
+        drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setPoseEstimate(startPose);
 
@@ -113,7 +114,7 @@ public class AutoRedClose extends LinearOpMode {
         }
 
     }
-    public TrajectorySequence auto(double angle) {
+    public static TrajectorySequence auto(double angle) {
         int a = (angle < 0 ? -1 : 1);
 
         double tag = -7.5;

@@ -27,15 +27,15 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "AutoBlueFar", group = ":3")
 public class AutoBlueFar extends LinearOpMode {
 
-    int s = 1;
+    static private int s = 1;
 
-    final private Pose2d startPose = new Pose2d(-36.0, 65 *s, Math.toRadians(-90.0 * s));
+    static private Pose2d startPose = new Pose2d(-36.0, 65 *s, Math.toRadians(-90.0 * s));
 
     private DcMotorEx arm;
 
 
 
-    private SampleMecanumDrive drive;
+    static private SampleMecanumDrive drive;
 
     private TouchSensor touch;
 
@@ -127,7 +127,7 @@ public class AutoBlueFar extends LinearOpMode {
 
     }
 //return drive.trajectorySequenceBuilder(startPose)
-    public TrajectorySequence auto(double angle) {
+    public static TrajectorySequence auto(double angle) {
         int a = (angle < 0 ? -1 : 1);
 
         double tag = -7.5;
@@ -171,7 +171,7 @@ public class AutoBlueFar extends LinearOpMode {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 29.0 * s;
+            double y = 31.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 

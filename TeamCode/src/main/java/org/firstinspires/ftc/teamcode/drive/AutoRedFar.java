@@ -17,15 +17,15 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "AutoRedFar", group = ":3")
 public class AutoRedFar extends LinearOpMode {
 
-    int s = -1;
+    static int s = -1;
 
-    final private Pose2d startPose = new Pose2d(-36.0, 65 *s, Math.toRadians(-90.0 * s));
+    private static Pose2d startPose = new Pose2d(-36.0, 65 *s, Math.toRadians(-90.0 * s));
 
     private DcMotorEx arm;
 
 
 
-    private SampleMecanumDrive drive;
+    private static SampleMecanumDrive drive;
 
     private TouchSensor touch;
 
@@ -117,17 +117,17 @@ public class AutoRedFar extends LinearOpMode {
 
     }
 //return drive.trajectorySequenceBuilder(startPose)
-    public TrajectorySequence auto(double angle) {
+    public static TrajectorySequence auto(double angle) {
         int a = (angle < 0 ? -1 : 1);
 
         double tag = -7.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
-            double heading = startPose.getHeading() - Math.toRadians(30.0)*a;
+            double heading = startPose.getHeading() - Math.toRadians(40.0)*a;
 //              * s
-            double x = startPose.getX() - 12.0 * a * s - + 9.0 * Math.cos(heading);
+            double x = startPose.getX() - 12.0 * a * s - + 7.0 * Math.cos(heading);
 //             + s * a *
-            double y = 24.0 * s - 9.0 * Math.sin(heading);
+            double y = 24.0 * s - 7.0 * Math.sin(heading);
 
 
             if (angle < -15.0) {
@@ -161,7 +161,7 @@ public class AutoRedFar extends LinearOpMode {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 29.0 * s;
+            double y = 31.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 

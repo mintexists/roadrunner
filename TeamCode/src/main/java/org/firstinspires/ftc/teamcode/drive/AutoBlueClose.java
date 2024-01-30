@@ -27,13 +27,13 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "AutoBlueClose", group = ":3")
 public class AutoBlueClose extends LinearOpMode {
 
-    int s = 1;
+    static int s = 1;
 
-    private Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
+    private static Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
 
     private DcMotorEx arm;
 
-    private final SampleMecanumDrive drive = new SampleMecanumDrive(hardwareMap);
+    private static SampleMecanumDrive drive;
 
     private TouchSensor touch;
 
@@ -102,6 +102,7 @@ public class AutoBlueClose extends LinearOpMode {
 //        while (!isStopRequested() && !opModeIsActive()) {
 //
 
+        drive = new SampleMecanumDrive(hardwareMap);
 
         drive.setPoseEstimate(startPose);
 
@@ -123,7 +124,7 @@ public class AutoBlueClose extends LinearOpMode {
         }
 
     }
-    public TrajectorySequence auto(double angle) {
+    public static TrajectorySequence auto(double angle) {
         int a = (angle < 0 ? -1 : 1);
 
         double tag = -7.5;
@@ -148,7 +149,7 @@ public class AutoBlueClose extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(58.0, 36.0 * s + tag, 0.0);
 
 
             return drive.trajectorySequenceBuilder(startPose)
@@ -167,7 +168,7 @@ public class AutoBlueClose extends LinearOpMode {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 29.0 * s;
+            double y = 31.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
