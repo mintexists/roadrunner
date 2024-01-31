@@ -27,14 +27,14 @@ public class AutoBlueFar extends LinearOpMode {
     public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
-        double tag = -7.5;
+        double tag = -4.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
             double heading = startPose.getHeading() - Math.toRadians(40.0) * a;
 //              * s
-            double x = startPose.getX() - 15.0 * a * s - +7.0 * Math.cos(heading);
+            double x = startPose.getX() - 10.0 * a * s;
 //             + s * a *
-            double y = 27.0 * s - 7.0 * Math.sin(heading);
+            double y = 30.0 * s;
 
 
             if (angle < -15.0) {
@@ -53,13 +53,15 @@ public class AutoBlueFar extends LinearOpMode {
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
                     })
+                    .lineTo(new Vector2d(-36.0, 48.0))
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(-36.0, 48.0, startPose.getHeading()), Math.toRadians(90.0 * s))
+                    .lineTo(new Vector2d(-36.0, 59.0 * s))
                     .setReversed(false)
                     .turn(Math.toRadians(90.0 * s))
-                    .lineTo(new Vector2d(30.0, 59.0 * s))
-                    .splineToConstantHeading(tagPose.vec(), 0.0)
+                    .lineTo(new Vector2d(24.0, 59.0 * s))
+                    .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
 //                    .forward(2)
 //                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
 //                    .forward(12)
