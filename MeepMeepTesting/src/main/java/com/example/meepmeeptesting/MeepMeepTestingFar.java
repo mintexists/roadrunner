@@ -57,13 +57,11 @@ public class MeepMeepTestingFar {
 //                                .back(7)
 //                                            .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
 //                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
-<<<<<<< Updated upstream
                                             .splineToConstantHeading(new Vector2d(-30, startPose.getY()), 0.0)
                                             .lineTo(new Vector2d(24.0, startPose.getY()))
 //                                          .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
 //                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, startPose.getY())))
                                             .splineToSplineHeading(tagPose, tagPose.getHeading())
-=======
 //                                            .splineToConstantHeading(new Vector2d(24.0, startPose.getY()), 0.0)
 //                                            .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
                                             .lineTo(new Vector2d(30.0, 59.0 * s))
@@ -74,7 +72,6 @@ public class MeepMeepTestingFar {
 //                                            .lineToSplineHeading(startPose)
 //                                            .lineTo(new Vector2d(36.0, 60.0*s))
 //                                            .splineToSplineHeading(tagPose, startPose.getHeading()/2)
->>>>>>> Stashed changes
                                             .build()
 //                                            .splineToSplineHeading(spikePose, spikePose.getHeading())
 ////                                .forward(7)
