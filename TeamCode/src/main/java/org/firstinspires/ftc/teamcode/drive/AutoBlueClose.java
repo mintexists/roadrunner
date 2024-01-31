@@ -29,7 +29,7 @@ public class AutoBlueClose extends LinearOpMode {
 
     static int s = 1;
 
-    private static Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
+    private static Pose2d startPose = new Pose2d(12.0, 59.0*s, Math.toRadians(-90.0 * s));
 
     private static DcMotorEx arm;
 
@@ -149,40 +149,44 @@ public class AutoBlueClose extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(58.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
 
 
             return drive.trajectorySequenceBuilder(startPose)
-                    .addSpatialMarker(new Vector2d(36.0, 60.0), () -> {
-                        //todo: start extending the arm here
+                    .addTemporalMarker(3.0, () -> {
+                        arm.setTargetPosition(-24500);
+                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                        arm.setPower(1.0);
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
-                    .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
-//                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, 60.0 * s), startPose.getHeading()), Math.toRadians(90.0))
-                    .splineToConstantHeading(new Vector2d(24, 60.0 * s), 0.0)
-//                                            .splineToSplineHeading(new Pose2d(24, 60.0 * s, startPose.getHeading()), 0.0)
-                    .splineToSplineHeading(tagPose, Math.toRadians(0.0))
+                    .setReversed(true)
+                    .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
+                    .setReversed(false)
+                    .lineTo(new Vector2d(30.0, 59.0 * s))
+                    .splineToSplineHeading(tagPose, 0.0)
                     .forward(2)
                     .build();
         } else {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 31.0 * s;
+            double y = 29.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
             Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
-                    .addSpatialMarker(new Vector2d(36.0, 60.0), () -> {
-                        //todo: start extending the arm here
+                    .addTemporalMarker(3.0, () -> {
+                        arm.setTargetPosition(-24500);
+                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                        arm.setPower(1.0);
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
-                    .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
-//                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, 60.0 * s), startPose.getHeading()), Math.toRadians(90.0))
-                    .splineToConstantHeading(new Vector2d(24, 60.0 * s), 0.0)
-//                                            .splineToSplineHeading(new Pose2d(24, 60.0 * s, startPose.getHeading()), 0.0)
-                    .splineToSplineHeading(tagPose, Math.toRadians(0.0))
+                    .setReversed(true)
+                    .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
+                    .setReversed(false)
+                    .lineTo(new Vector2d(30.0, 59.0 * s))
+                    .splineToSplineHeading(tagPose, 0.0)
                     .forward(2)
                     .build();
         }

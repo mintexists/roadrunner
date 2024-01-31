@@ -8,11 +8,11 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTestingClose {
     static int s = -1;
-    static Pose2d startPose = new Pose2d(12.0, 60*s, Math.toRadians(-90.0 * s));
+    static Pose2d startPose = new Pose2d(12.0, 59*s, Math.toRadians(-90.0 * s));
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(1000);
 
-        double angle = 0.0;
+        double angle = -20.0;
         int a = (angle < 0 ? -1 : 1);
         RoadRunnerBotEntity myBot;
 
@@ -46,18 +46,28 @@ public class MeepMeepTestingClose {
                     .setConstraints(41, 41, Math.toRadians(180), Math.toRadians(180), 17.5)
                     .followTrajectorySequence(drive ->
                                     drive.trajectorySequenceBuilder(startPose)
-                                            .addSpatialMarker(new Vector2d(36.0, 60.0), () -> {
+                                            .addTemporalMarker(3.0, () -> {
                                                 //todo: start extending the arm here
                                             })
                                             .splineToSplineHeading(spikePose, spikePose.getHeading())
+                                            .setReversed(true)
+//                                            .splineToSplineHeading(new Pose2d(12.0, 48.0 * s, startPose.getHeading()), -startPose.getHeading())
+                                            .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
+                                            .setReversed(false)
 //                                .forward(7)
 //                                .back(7)
-                                            .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
+//                                            .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
 //                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
-                                            .splineToConstantHeading(new Vector2d(24, startPose.getY()), 0.0)
+//                                            .splineToConstantHeading(new Vector2d(24.0, startPose.getY()), 0.0)
 //                                            .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
-                                            .splineToSplineHeading(tagPose, Math.toRadians(0.0))
+                                            .lineTo(new Vector2d(30.0, 59.0 * s))
+//                                            .splineToSplineHeading(tagPose, Math.atan2(tagPose.getX() - 60.0*s, tagPose.getX() - 30.0))
+                                            .splineToSplineHeading(tagPose, 0.0)
                                             .forward(2)
+//                                            .lineToSplineHeading(spikePose)
+//                                            .lineToSplineHeading(startPose)
+//                                            .lineTo(new Vector2d(36.0, 60.0*s))
+//                                            .splineToSplineHeading(tagPose, startPose.getHeading()/2)
                                             .build()
                     );
         } else {
@@ -74,18 +84,28 @@ public class MeepMeepTestingClose {
                     .setConstraints(41, 41, Math.toRadians(180), Math.toRadians(180), 16)
                     .followTrajectorySequence(drive ->
                                     drive.trajectorySequenceBuilder(startPose)
-                                            .addSpatialMarker(new Vector2d(36.0, 60.0), () -> {
+                                            .addTemporalMarker(3.0, () -> {
                                                 //todo: start extending the arm here
                                             })
                                             .splineToSplineHeading(spikePose, spikePose.getHeading())
+                                            .setReversed(true)
+//                                            .splineToSplineHeading(new Pose2d(12.0, 48.0 * s, startPose.getHeading()), -startPose.getHeading())
+                                            .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
+                                            .setReversed(false)
 //                                .forward(7)
 //                                .back(7)
-                                            .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
+//                                            .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
 //                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, startPose.getY()), startPose.getHeading()), Math.toRadians(90.0))
-                                            .splineToConstantHeading(new Vector2d(24, startPose.getY()), 0.0)
+//                                            .splineToConstantHeading(new Vector2d(24.0, startPose.getY()), 0.0)
 //                                            .splineToSplineHeading(new Pose2d(24, startPose.getY(), startPose.getHeading()), 0.0)
-                                            .splineToSplineHeading(tagPose, Math.toRadians(0.0))
+                                            .lineTo(new Vector2d(30.0, 59.0 * s))
+//                                            .splineToSplineHeading(tagPose, Math.atan2(tagPose.getX() - 60.0*s, tagPose.getX() - 30.0))
+                                            .splineToSplineHeading(tagPose, 0.0)
                                             .forward(2)
+//                                            .lineToSplineHeading(spikePose)
+//                                            .lineToSplineHeading(startPose)
+//                                            .lineTo(new Vector2d(36.0, 60.0*s))
+//                                            .splineToSplineHeading(tagPose, startPose.getHeading()/2)
                                             .build()
                     );
         }
