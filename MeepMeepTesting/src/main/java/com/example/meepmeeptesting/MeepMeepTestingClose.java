@@ -68,6 +68,9 @@ public class MeepMeepTestingClose {
 //                                            .lineToSplineHeading(startPose)
 //                                            .lineTo(new Vector2d(36.0, 60.0*s))
 //                                            .splineToSplineHeading(tagPose, startPose.getHeading()/2)
+                                            .back(2)
+                                            .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
+                                            .forward(12)
                                             .build()
                     );
         } else {
@@ -106,6 +109,9 @@ public class MeepMeepTestingClose {
 //                                            .lineToSplineHeading(startPose)
 //                                            .lineTo(new Vector2d(36.0, 60.0*s))
 //                                            .splineToSplineHeading(tagPose, startPose.getHeading()/2)
+                                            .back(2)
+                                            .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
+                                            .forward(12)
                                             .build()
                     );
         }

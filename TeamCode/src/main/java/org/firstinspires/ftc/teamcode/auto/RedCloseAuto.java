@@ -7,7 +7,6 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -15,12 +14,9 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.teamcode.drive.AutoBlueFar;
 import org.firstinspires.ftc.teamcode.drive.AutoRedClose;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
-import org.firstinspires.ftc.teamcode.encoderdrive;
 import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
@@ -44,22 +40,20 @@ public class RedCloseAuto extends LinearOpMode {
     };
     int s = 1;
 
-    final private Pose2d startPose = new Pose2d(-36.0, 65 *s, Math.toRadians(-90.0 * s));
-
+    final private Pose2d startPose = new Pose2d(-36.0, 65 * s, Math.toRadians(-90.0 * s));
+    int id;
     private SampleMecanumDrive drive;
-
     /**
      * The variable to store our instance of the TensorFlow Object Detection processor.
      */
     private TfodProcessor tfod;
-
     private AprilTagProcessor aprilTag;
-
     private DcMotor arm;
-
     private TouchSensor touch;
-
-    int id;
+    /**
+     * The variable to store our instance of the vision portal.
+     */
+    private VisionPortal visionPortal;
 
     public void arminit() {
         arm = hardwareMap.get(DcMotor.class, "arm");
@@ -77,11 +71,6 @@ public class RedCloseAuto extends LinearOpMode {
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
     }
-
-    /**
-     * The variable to store our instance of the vision portal.
-     */
-    private VisionPortal visionPortal;
 
     @Override
     public void runOpMode() {
@@ -224,7 +213,6 @@ public class RedCloseAuto extends LinearOpMode {
     }   // end method initTfod()
 
 
-
     /**
      * Add telemetry about AprilTag detections.
      */
@@ -298,6 +286,7 @@ public class RedCloseAuto extends LinearOpMode {
 //        telemetry.addLine("RBE = Range, Bearing & Elevation");
 //
 //    }   // end method telemetryAprilTag()
+
     /**
      * Add telemetry about TensorFlow Object Detection (TFOD) recognitions.
      */
@@ -308,14 +297,14 @@ public class RedCloseAuto extends LinearOpMode {
 
         // Step through the list of recognitions and display info for each one.
         for (Recognition recognition : currentRecognitions) {
-            double x = (recognition.getLeft() + recognition.getRight()) / 2 ;
-            double y = (recognition.getTop()  + recognition.getBottom()) / 2 ;
+            double x = (recognition.getLeft() + recognition.getRight()) / 2;
+            double y = (recognition.getTop() + recognition.getBottom()) / 2;
 
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoRedClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
             }
 
-            telemetry.addData(""," ");
+            telemetry.addData("", " ");
             telemetry.addData("Image", "%s (%.0f %% Conf.)", recognition.getLabel(), recognition.getConfidence() * 100);
             telemetry.addData("- Position", "%.0f / %.0f", x, y);
             telemetry.addData("- Size", "%.0f x %.0f", recognition.getWidth(), recognition.getHeight());

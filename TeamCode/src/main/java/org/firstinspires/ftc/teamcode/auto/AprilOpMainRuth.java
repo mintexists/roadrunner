@@ -30,22 +30,18 @@
 package org.firstinspires.ftc.teamcode.auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-
-import org.firstinspires.ftc.teamcode.encoderdrive;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-
-import com.qualcomm.robotcore.hardware.PIDCoefficients;
-import com.qualcomm.robotcore.hardware.PIDFCoefficients;
-import com.qualcomm.robotcore.hardware.TouchSensor;
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
+import org.firstinspires.ftc.teamcode.encoderdrive;
+import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 
@@ -251,7 +247,7 @@ public class AprilOpMainRuth extends encoderdrive {
                         reset();
                         visionPortal.setProcessorEnabled(aprilTag, false);
                         arm.setTargetPosition(-24500);
-                        ((DcMotorEx) arm).setTargetPositionTolerance(10);
+                        arm.setTargetPositionTolerance(10);
                         runOffset(detection.ftcPose.x + 160, detection.ftcPose.y - 180, -detection.ftcPose.yaw);
                         while (arm.isBusy()) {
                             telemetry.addData("", "%s", arm.getCurrentPosition());
@@ -265,7 +261,7 @@ public class AprilOpMainRuth extends encoderdrive {
                             sleep(20);
                             idle();
                         }
-                        runOffset(-35*25.4, 0, 0);
+                        runOffset(-35 * 25.4, 0, 0);
                         runOffset(0, 300, 0);
                         while (arm.isBusy()) {
                             telemetry.addData("", "%s", arm.getCurrentPosition());

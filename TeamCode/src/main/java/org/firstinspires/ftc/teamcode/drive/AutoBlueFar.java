@@ -1,35 +1,21 @@
 package org.firstinspires.ftc.teamcode.drive;
 
-import androidx.annotation.NonNull;
-
-// RR-specific imports
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.config.Config;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
-import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
-
-// Non-RR imports
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 @Autonomous(name = "AutoBlueFar", group = ":3")
 public class AutoBlueFar extends LinearOpMode {
 
-    static private int s = 1;
+    static private final int s = 1;
 
-    static private Pose2d startPose = new Pose2d(-36.0, 65 *s, Math.toRadians(-90.0 * s));
+    static private final Pose2d startPose = new Pose2d(-36.0, 65 * s, Math.toRadians(-90.0 * s));
 
     private static DcMotorEx arm;
 
@@ -37,9 +23,77 @@ public class AutoBlueFar extends LinearOpMode {
 
     private TouchSensor touch;
 
+    //return drive.trajectorySequenceBuilder(startPose)
+    public static TrajectorySequence auto(double angle, SampleMecanumDrive drive) {
+        int a = (angle < 0 ? -1 : 1);
+
+        double tag = -7.5;
+
+        if (!(angle >= -15.0 && angle <= 15.0)) {
+            double heading = startPose.getHeading() - Math.toRadians(40.0) * a;
+//              * s
+            double x = startPose.getX() - 15.0 * a * s - +7.0 * Math.cos(heading);
+//             + s * a *
+            double y = 27.0 * s - 7.0 * Math.sin(heading);
+
+
+            if (angle < -15.0) {
+                tag += 6.5;
+            } else if (angle > 15.0) {
+                tag += -6.5;
+            }
+
+            Pose2d spikePose = new Pose2d(x, y, heading);
+
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+
+            return drive.trajectorySequenceBuilder(startPose)
+                    .addTemporalMarker(3.0, () -> {
+                        arm.setTargetPosition(-24500);
+                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                        arm.setPower(1.0);
+                    })
+                    .splineToSplineHeading(spikePose, spikePose.getHeading())
+                    .setReversed(true)
+                    .splineToSplineHeading(startPose, Math.toRadians(90.0 * s))
+                    .setReversed(false)
+                    .lineTo(new Vector2d(30.0, 59.0 * s))
+                    .splineToSplineHeading(tagPose, 0.0)
+                    .forward(2)
+                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
+                    .forward(6)
+                    .build();
+        } else {
+            double heading = startPose.getHeading();
+
+            double x = startPose.getX();
+            double y = 29.0 * s;
+
+            Pose2d spikePose = new Pose2d(x, y, heading);
+
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            return drive.trajectorySequenceBuilder(startPose)
+                    .addTemporalMarker(3.0, () -> {
+                        arm.setTargetPosition(-24500);
+                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+                        arm.setPower(1.0);
+                    })
+                    .splineToSplineHeading(spikePose, spikePose.getHeading())
+                    .setReversed(true)
+                    .splineToSplineHeading(startPose, Math.toRadians(90.0 * s))
+                    .setReversed(false)
+                    .lineTo(new Vector2d(30.0, 59.0 * s))
+                    .splineToSplineHeading(tagPose, 0.0)
+                    .forward(2)
+                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
+                    .forward(6)
+                    .build();
+        }
+    }
+
     public void arminit() {
 
-        arm = (DcMotorEx) hardwareMap.get(DcMotorEx.class, "arm");
+        arm = hardwareMap.get(DcMotorEx.class, "arm");
         touch = hardwareMap.get(TouchSensor.class, "touch");
         arm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
@@ -123,77 +177,5 @@ public class AutoBlueFar extends LinearOpMode {
             telemetry.update();
         }
 
-    }
-//return drive.trajectorySequenceBuilder(startPose)
-    public static TrajectorySequence auto(double angle, SampleMecanumDrive drive) {
-        int a = (angle < 0 ? -1 : 1);
-
-        double tag = -7.5;
-
-        if (!(angle >= -15.0 && angle <= 15.0)) {
-            double heading = startPose.getHeading() - Math.toRadians(40.0)*a;
-//              * s
-            double x = startPose.getX() - 15.0 * a * s - + 7.0 * Math.cos(heading);
-//             + s * a *
-            double y = 27.0 * s - 7.0 * Math.sin(heading);
-
-
-            if (angle < -15.0) {
-                tag += 6.5;
-            } else if (angle > 15.0) {
-                tag += -6.5;
-            }
-
-            Pose2d spikePose = new Pose2d(x, y, heading);
-
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
-
-            return drive.trajectorySequenceBuilder(startPose)
-                    .addTemporalMarker(3.0, () -> {
-                        arm.setTargetPosition(-24500);
-                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                        arm.setPower(1.0);
-                    })
-                    .splineToSplineHeading(spikePose, spikePose.getHeading())
-//                                .forward(7)
-//                                .back(7)
-                    .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
-//                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, 60.0 * s), startPose.getHeading()), Math.toRadians(90.0))
-                    .splineToConstantHeading(new Vector2d(-30, 60.0 * s), 0.0)
-                    .lineTo(new Vector2d(24.0, 60.0 * s))
-//                                          .splineToSplineHeading(new Pose2d(24, 60.0 * s, startPose.getHeading()), 0.0)
-//                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, 60.0 * s)))
-                    .splineToSplineHeading(tagPose, tagPose.getHeading())
-                    .setReversed(true)
-                    .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
-                    .setReversed(false)
-                    .lineTo(new Vector2d(30.0, 59.0 * s))
-                    .splineToSplineHeading(tagPose, 0.0)
-                    .forward(2)
-                    .build();
-        } else {
-            double heading = startPose.getHeading();
-
-            double x = startPose.getX();
-            double y = 29.0 * s;
-
-            Pose2d spikePose = new Pose2d(x, y, heading);
-
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
-            return drive.trajectorySequenceBuilder(startPose)
-                    .addTemporalMarker(3.0, () -> {
-                        arm.setTargetPosition(-24500);
-                        arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                        arm.setPower(1.0);
-                    })
-                    .splineToSplineHeading(spikePose, spikePose.getHeading())
-                    .setReversed(true)
-                    .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
-                    .setReversed(false)
-                    .lineTo(new Vector2d(30.0, 59.0 * s))
-                    .splineToSplineHeading(tagPose, 0.0)
-                    .forward(2)
-                    .build();
-        }
     }
 }
