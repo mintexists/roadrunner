@@ -105,6 +105,8 @@ public class RedFarAuto extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+
+            gateinit();
             while (opModeIsActive()) {
 
                 if (visionPortal.getProcessorEnabled(tfod)) telemetryTfod();

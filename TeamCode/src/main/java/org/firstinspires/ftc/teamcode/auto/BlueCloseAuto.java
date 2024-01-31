@@ -105,6 +105,8 @@ public class BlueCloseAuto extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+
+            gateinit();
             while (opModeIsActive()) {
 
                 if (visionPortal.getProcessorEnabled(tfod)) telemetryTfod();

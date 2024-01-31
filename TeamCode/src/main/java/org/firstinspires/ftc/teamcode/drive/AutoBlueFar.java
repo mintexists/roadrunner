@@ -24,7 +24,7 @@ public class AutoBlueFar extends LinearOpMode {
     private TouchSensor touch;
 
     //return drive.trajectorySequenceBuilder(startPose)
-    public static TrajectorySequence auto(double angle, SampleMecanumDrive drive) {
+    public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
         double tag = -7.5;
@@ -55,7 +55,7 @@ public class AutoBlueFar extends LinearOpMode {
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(startPose, Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
                     .setReversed(false)
                     .lineTo(new Vector2d(30.0, 59.0 * s))
                     .splineToSplineHeading(tagPose, 0.0)
@@ -80,7 +80,7 @@ public class AutoBlueFar extends LinearOpMode {
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(startPose, Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
                     .setReversed(false)
                     .lineTo(new Vector2d(30.0, 59.0 * s))
                     .splineToSplineHeading(tagPose, 0.0)
@@ -165,7 +165,7 @@ public class AutoBlueFar extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectorySequence(auto(20.0, drive));
+        drive.followTrajectorySequence(auto(20.0, drive, arm));
 
 
         while (opModeIsActive()) {

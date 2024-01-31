@@ -40,7 +40,7 @@ public class BlueFarAuto extends LinearOpMode {
     };
     int s = 1;
 
-    final private Pose2d startPose = new Pose2d(-36.0, 65 * s, Math.toRadians(-90.0 * s));
+    final private Pose2d startPose = new Pose2d(-36.0, 63.5 * s, Math.toRadians(-90.0 * s));
     int id;
     private SampleMecanumDrive drive;
     /**
@@ -77,7 +77,7 @@ public class BlueFarAuto extends LinearOpMode {
 
         gate = hardwareMap.get(DcMotor.class, "gate");
         gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        gate.setTargetPosition(48);
+        gate.setTargetPosition(-144);
         gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         gate.setPower(0.1);
 
@@ -105,6 +105,9 @@ public class BlueFarAuto extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+
+            gateinit();
+
             while (opModeIsActive()) {
 
                 if (visionPortal.getProcessorEnabled(tfod)) telemetryTfod();
@@ -312,7 +315,7 @@ public class BlueFarAuto extends LinearOpMode {
             double y = (recognition.getTop() + recognition.getBottom()) / 2;
 
             if (recognition.getLabel().equals("Pixel")) {
-                drive.followTrajectorySequence(AutoBlueFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive));
+                drive.followTrajectorySequence(AutoBlueFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
             }
 
             telemetry.addData("", " ");
