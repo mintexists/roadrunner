@@ -131,7 +131,15 @@ public class AutoBlueFar extends LinearOpMode {
         double tag = -7.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
+<<<<<<< Updated upstream
             double heading = startPose.getHeading() - Math.toRadians(40.0)*a;
+=======
+//            double heading = startPose.getHeading() - Math.toRadians(30.0) * a;
+//
+//            double x = startPose.getX() + 12.0 * a * s - 9.0 * Math.cos(heading);
+//            double y = 24.0 * s - 9.0 * Math.sin(heading);
+            double heading = startPose.getHeading() - Math.toRadians(30.0)*a;
+>>>>>>> Stashed changes
 //              * s
             double x = startPose.getX() - 15.0 * a * s - + 7.0 * Math.cos(heading);
 //             + s * a *
@@ -146,15 +154,16 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(58.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
 
             return drive.trajectorySequenceBuilder(startPose)
-                    .addTemporalMarker(2.0, () -> {
+                    .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
+<<<<<<< Updated upstream
 //                                .forward(7)
 //                                .back(7)
                     .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
@@ -164,32 +173,37 @@ public class AutoBlueFar extends LinearOpMode {
 //                                          .splineToSplineHeading(new Pose2d(24, 60.0 * s, startPose.getHeading()), 0.0)
 //                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, 60.0 * s)))
                     .splineToSplineHeading(tagPose, tagPose.getHeading())
+=======
+                    .setReversed(true)
+                    .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
+                    .setReversed(false)
+                    .lineTo(new Vector2d(30.0, 59.0 * s))
+                    .splineToSplineHeading(tagPose, 0.0)
+                    .forward(2)
+>>>>>>> Stashed changes
                     .build();
         } else {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 31.0 * s;
+            double y = 29.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(58.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
-                    .addTemporalMarker(2.0, () -> {
+                    .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
                     })
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
-//                                .forward(7)
-//                                .back(7)
-                    .lineToSplineHeading(new Pose2d(startPose.getX(), 48.0 * s, startPose.getHeading()))
-//                                            .splineToSplineHeading(new Pose2d(startPose.getX()+5, Math.copySign(48.0, 60.0 * s), startPose.getHeading()), Math.toRadians(90.0))
-                    .splineToConstantHeading(new Vector2d(-24, 60.0 * s), 0.0)
-                    .lineTo(new Vector2d(24.0, 60.0 * s))
-//                                          .splineToSplineHeading(new Pose2d(24, 60.0 * s, startPose.getHeading()), 0.0)
-//                                            .lineTo(new Vector2d(26.0, Math.copySign(60.0, 60.0 * s)))
-                    .splineToSplineHeading(tagPose, tagPose.getHeading())
+                    .setReversed(true)
+                    .splineToSplineHeading(startPose, Math.toRadians(90.0*s))
+                    .setReversed(false)
+                    .lineTo(new Vector2d(30.0, 59.0 * s))
+                    .splineToSplineHeading(tagPose, 0.0)
+                    .forward(2)
                     .build();
         }
     }
