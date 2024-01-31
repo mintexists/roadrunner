@@ -49,6 +49,7 @@ public class BlueFarAuto extends LinearOpMode {
     private TfodProcessor tfod;
     private AprilTagProcessor aprilTag;
     private DcMotor arm;
+    private DcMotor gate;
     private TouchSensor touch;
     /**
      * The variable to store our instance of the vision portal.
@@ -70,6 +71,16 @@ public class BlueFarAuto extends LinearOpMode {
         }
 
         arm.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+    }
+
+    public void gateinit() {
+
+        gate = hardwareMap.get(DcMotor.class, "gate");
+        gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        gate.setTargetPosition(48);
+        gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        gate.setPower(0.1);
+
     }
 
     @Override

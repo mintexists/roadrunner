@@ -67,9 +67,9 @@ public class AutoRedClose extends LinearOpMode {
                     .setReversed(false)
                     .lineTo(new Vector2d(30.0, 59.0 * s))
                     .splineToSplineHeading(tagPose, 0.0)
-                    .forward(2)
-                    .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
-                    .forward(6)
+//                    .forward(2)
+//                    .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
+//                    .forward(12)
                     .build();
         } else {
             double heading = startPose.getHeading();
@@ -92,9 +92,9 @@ public class AutoRedClose extends LinearOpMode {
                     .setReversed(false)
                     .lineTo(new Vector2d(30.0, 59.0 * s))
                     .splineToSplineHeading(tagPose, 0.0)
-                    .forward(2)
-                    .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
-                    .forward(6)
+//                    .forward(2)
+//                    .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
+//                    .forward(12)
                     .build();
         }
     }
