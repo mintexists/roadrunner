@@ -7,6 +7,8 @@ import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -49,7 +51,7 @@ public class BlueFarAuto extends LinearOpMode {
     private TfodProcessor tfod;
     private AprilTagProcessor aprilTag;
     private DcMotor arm;
-    private DcMotor gate;
+    private DcMotorEx gate;
     private TouchSensor touch;
     /**
      * The variable to store our instance of the vision portal.
@@ -75,11 +77,20 @@ public class BlueFarAuto extends LinearOpMode {
 
     public void gateinit() {
 
-        gate = hardwareMap.get(DcMotor.class, "gate");
+        gate = hardwareMap.get(DcMotorEx.class, "gate");
+        gate.setDirection(DcMotorSimple.Direction.FORWARD);
         gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        gate.setTargetPosition(-144);
+        gate.setTargetPosition(-72);
         gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        gate.setPower(0.1);
+        gate.setPower(1);
+//        gate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//        while ((gate.getCurrentPosition() < -74 || gate.getCurrentPosition() > -72) && opModeIsActive()) {
+//            gate.setPower(Math.copySign(0.2, gate.getTargetPosition() - gate.getCurrentPosition()));
+//            telemetry.addData("GATE POS", gate.getCurrentPosition());
+//            telemetry.update();
+//            sleep(20);
+//        }
 
     }
 
