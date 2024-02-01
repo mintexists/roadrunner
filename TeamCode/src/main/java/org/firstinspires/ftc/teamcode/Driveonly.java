@@ -93,8 +93,8 @@ public class Driveonly extends LinearOpMode {
             double cos = Math.cos(theta - Math.PI/4);
             double max = Math.max(Math.abs(sin), Math.abs(cos));
 
-            double bl = power * sin/max  + turn;
-            double br = power * cos/max  - turn;
+            double bl = power * sin/max  - turn;
+            double br = power * cos/max  + turn;
             double fl = power * cos/max  + turn;
             double fr = power * sin/max  - turn;
 
