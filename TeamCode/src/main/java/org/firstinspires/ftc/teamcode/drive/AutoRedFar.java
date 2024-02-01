@@ -1,9 +1,5 @@
 package org.firstinspires.ftc.teamcode.drive;
 
-// RR-specific imports
-
-// Non-RR imports
-
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -17,14 +13,13 @@ import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 @Autonomous(name = "AutoRedFar", group = ":3")
 public class AutoRedFar extends LinearOpMode {
 
-    static int s = -1;
+    static private final int s = -1;
 
-    private static final Pose2d startPose = new Pose2d(-36.0, 65 * s, Math.toRadians(-90.0 * s));
+    static private final Pose2d startPose = new Pose2d(-36.0, 65 * s, Math.toRadians(-90.0 * s));
 
     private static DcMotorEx arm;
 
-
-    private static SampleMecanumDrive drive;
+    static private SampleMecanumDrive drive;
 
     private TouchSensor touch;
 
@@ -32,7 +27,7 @@ public class AutoRedFar extends LinearOpMode {
     public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
-        double tag = -7.5;
+        double tag = -6.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
             double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
@@ -43,15 +38,14 @@ public class AutoRedFar extends LinearOpMode {
 
 
             if (angle < -15.0) {
-                tag += 6.5;
+                tag += 6.0;
             } else if (angle > 15.0) {
-                tag += -6.5;
+                tag += -6.0;
             }
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(45.0, 36.0 * s + tag, 0.0);
-
+            Pose2d tagPose = new Pose2d(46.5, 36.0 * s + tag, 0.0);
 
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
@@ -68,16 +62,17 @@ public class AutoRedFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
+                    .waitSeconds(2)
                     .build();
         } else {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 29.0 * s;
+            double y = 31.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(47.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
@@ -119,48 +114,6 @@ public class AutoRedFar extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-//    {
-//
-//        drive.setPoseEstimate(startPose);
-//
-//        arminit();
-//
-//        double angle = 20.0;
-//
-//        double heading = startPose.getHeading();
-//
-//        double tag = 0.0;
-//
-//        if (angle < -15.0) {
-//            heading += Math.toRadians(60.0);
-//            tag = 7.0;
-//        } else if (angle > 15.0) {
-//            //todo
-//            heading -= Math.toRadians(60.0);
-//            tag = -7.0;
-//        }
-//
-//        Pose2d spikePose = new Pose2d(spikeVec, heading);
-//
-//        Pose2d tagPose = new Pose2d(48.0, 30.0+tag, 0.0);
-//
-//        TrajectorySequence traj = drive.trajectorySequenceBuilder(startPose)
-//            .addSpatialMarker(new Vector2d(36.0, 60.0), () -> {
-//                //todo: start extending the arm here
-//                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-//                arm.setPower(1.0);
-//                arm.setTargetPosition(-24500);
-//            })
-//            .lineToSplineHeading(spikePose)
-//            .forward(7)
-//            .back(7)
-//            .lineToSplineHeading(new Pose2d(startPose.vec(), 0.0))
-//
-//            .splineToConstantHeading(tagPose.vec(), tagPose.getHeading())
-//            .build();
-//
-//        while (!isStopRequested() && !opModeIsActive()) {
-//
 
         drive = new SampleMecanumDrive(hardwareMap);
 
@@ -172,7 +125,6 @@ public class AutoRedFar extends LinearOpMode {
         if (isStopRequested()) return;
 
         drive.followTrajectorySequence(auto(0.0, drive, arm));
-
 
         while (opModeIsActive()) {
             Pose2d poseEstimate = drive.getPoseEstimate();

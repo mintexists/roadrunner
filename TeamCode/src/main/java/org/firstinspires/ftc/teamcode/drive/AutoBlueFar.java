@@ -124,7 +124,7 @@ public class AutoBlueFar extends LinearOpMode {
 
         if (isStopRequested()) return;
 
-        drive.followTrajectorySequence(auto(20.0, drive, arm));
+        drive.followTrajectorySequence(auto(0.0, drive, arm));
 
         while (opModeIsActive()) {
             Pose2d poseEstimate = drive.getPoseEstimate();
