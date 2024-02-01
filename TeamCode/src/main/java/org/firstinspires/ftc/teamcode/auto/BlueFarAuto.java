@@ -4,6 +4,8 @@ package org.firstinspires.ftc.teamcode.auto;
 // lemme know if this is legible or if theres a better way to do this :3
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -81,8 +83,9 @@ public class BlueFarAuto extends LinearOpMode {
         gate.setDirection(DcMotorSimple.Direction.FORWARD);
         gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         gate.setTargetPosition(-100);
+        gate.setTargetPositionTolerance(5);
         gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        gate.setPower(1);
+        gate.setPower(0.5);
 //        gate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 //
 //        while ((gate.getCurrentPosition() < -74 || gate.getCurrentPosition() > -72) && opModeIsActive()) {
@@ -113,11 +116,11 @@ public class BlueFarAuto extends LinearOpMode {
             telemetry.update();
         }
 
+        gateinit();
+
         waitForStart();
 
         if (opModeIsActive()) {
-
-            gateinit();
 
             while (opModeIsActive()) {
 
@@ -327,6 +330,24 @@ public class BlueFarAuto extends LinearOpMode {
 
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoBlueFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
+
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+                arm.setTargetPosition(0);
+
+                drive.followTrajectorySequence(
+                        drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .lineTo(new Vector2d(48.0, 12.0*s))
+                                .forward(6)
+                                .build()
+                );
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+
+                visionPortal.setProcessorEnabled(tfod, false);
+
             }
 
             telemetry.addData("", " ");

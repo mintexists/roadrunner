@@ -27,7 +27,7 @@ public class AutoBlueFar extends LinearOpMode {
     public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
-        double tag = -7.5;
+        double tag = -4.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
             double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
@@ -60,8 +60,8 @@ public class AutoBlueFar extends LinearOpMode {
                     .setReversed(false)
                     .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
                     .turn(Math.toRadians(90.0 * s))
-                    .lineTo(new Vector2d(30.0, 59.0 * s))
-                    .splineToConstantHeading(tagPose.vec(), 0.0)
+                    .lineTo(new Vector2d(24.0, 59.0 * s))
+                    .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
 //                    .forward(2)
 //                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
 //                    .forward(12)

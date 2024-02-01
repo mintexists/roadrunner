@@ -6,41 +6,41 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepTestingFar {
+public class ConceptFar {
 
 
     static int s = 1;
-    static Pose2d startPose = new Pose2d(-36.0, 59*s, Math.toRadians(-90.0 * s));
+    static Pose2d startPose = new Pose2d(-35.25, 58.75*s, Math.toRadians(-90.0 * s));
 
     public static void main(String[] args) {
-        MeepMeep meepMeep = new MeepMeep(800);
+        MeepMeep meepMeep = new MeepMeep(1080);
 
         double angle = 20.0;
         int a = (angle < 0 ? -1 : 1);
         RoadRunnerBotEntity myBot;
 
-        double tag = -7.5;
-
         if (!(angle >= -15.0 && angle <= 15.0)) {
-            double heading = startPose.getHeading() - Math.toRadians(40.0)*a;
 //              * s
-            double x = startPose.getX() - 6.0 * a * s;
+            double x = -56;
 //             + s * a *
-            double y = 30.0 * s;
+            double y = 35.75 * s;
 
+            final double tag;
 
             if (angle < -15.0) {
-                tag += 6.5;
+                tag = 6;
             } else if (angle > 15.0) {
-                tag += -6.5;
+                tag = -6;
+            } else {
+                tag = 0;
             }
 
-            Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d spikePose = new Pose2d(x, y, 0.0);
 
 
             myBot = new DefaultBotBuilder(meepMeep)
+                    .setDimensions(17.5, 17)
                     // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                     .setConstraints(41, 41, Math.toRadians(180), Math.toRadians(180), 17.5)
                     .followTrajectorySequence(drive ->
@@ -50,18 +50,14 @@ public class MeepMeepTestingFar {
 //                                                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 //                                                arm.setPower(1.0);
                                             })
-                                            .lineTo(new Vector2d(-36.0, 48.0))
-                                            .splineToSplineHeading(spikePose, spikePose.getHeading())
-                                            .setReversed(true)
-                                            .splineToSplineHeading(new Pose2d(-36.0, 48.0, startPose.getHeading()), Math.toRadians(90.0 * s))
-                                            .lineTo(new Vector2d(-36.0, 60.0 * s))
-                                            .setReversed(false)
-                                            .turn(Math.toRadians(90.0 * s))
-                                            .lineTo(new Vector2d(30.0, 59.0 * s))
-                                            .splineToConstantHeading(tagPose.vec(), 0.0)
-//                    .forward(2)
-//                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
-//                    .forward(12)
+                                            .setTangent(Math.toRadians(180))
+                                            .splineToSplineHeading(spikePose, Math.toRadians(-90 * s))//, startPose.getHeading())
+                                            .lineTo(new Vector2d(-35.25 - 11.75 * a * s - 3, y))
+                                            .lineTo(spikePose.vec())
+                                            .lineTo(new Vector2d(x, 23.5*s))
+                                            .splineToConstantHeading(new Vector2d(-47, 11.75*s), 0.0)
+                                            .lineTo(new Vector2d(29.375, 11.75*s))
+                                            .splineToConstantHeading(new Vector2d(48.5, 35.25*s + tag - 7.5), Math.toRadians(90*s))
                                             .build()
                     );
         } else {
@@ -72,7 +68,7 @@ public class MeepMeepTestingFar {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s, 0.0);
             myBot = new DefaultBotBuilder(meepMeep)
                     // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                     .setConstraints(41, 41, Math.toRadians(180), Math.toRadians(180), 16)
