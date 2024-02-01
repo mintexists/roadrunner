@@ -61,14 +61,17 @@ public class AutoRedClose extends LinearOpMode {
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
                     })
+                    .forward(13.0)
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(startPose, Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
                     .setReversed(false)
-                    .lineTo(new Vector2d(30.0, 59.0 * s))
-                    .splineToSplineHeading(tagPose, 0.0)
+                    .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
+                    .turn(Math.toRadians(90.0 * s))
+                    .lineTo(new Vector2d(24.0, 59.0 * s))
+                    .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
 //                    .forward(2)
-//                    .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
+//                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
 //                    .forward(12)
                     .build();
         } else {
@@ -86,14 +89,17 @@ public class AutoRedClose extends LinearOpMode {
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
                     })
+                    .forward(13.0)
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(startPose, Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
                     .setReversed(false)
-                    .lineTo(new Vector2d(30.0, 59.0 * s))
-                    .splineToSplineHeading(tagPose, 0.0)
+                    .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
+                    .turn(Math.toRadians(90.0 * s))
+                    .lineTo(new Vector2d(24.0, 59.0 * s))
+                    .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
 //                    .forward(2)
-//                    .splineToConstantHeading(new Vector2d(48.0, 60.0*s), 0.0)
+//                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
 //                    .forward(12)
                     .build();
         }
