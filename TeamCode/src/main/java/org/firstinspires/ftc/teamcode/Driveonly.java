@@ -93,10 +93,10 @@ public class Driveonly extends LinearOpMode {
             double cos = Math.cos(theta - Math.PI/4);
             double max = Math.max(Math.abs(sin), Math.abs(cos));
 
-            double bl = power * sin/max  - turn;
-            double br = power * cos/max  + turn;
-            double fl = power * cos/max  + turn;
-            double fr = power * sin/max  - turn;
+            double bl = (power * sin/max  + turn) / boost;
+            double br = (power * cos/max  - turn) / boost;
+            double fl = (power * cos/max  + turn) / boost;
+            double fr = (power * sin/max  - turn) / boost;
 
 //            if ((power + Math.abs(turn)) > 1) {
 //                bl /= power + Math.abs(turn);
@@ -106,10 +106,10 @@ public class Driveonly extends LinearOpMode {
 //            }
 
             // Setup a variable for each drive wheel to save power level for telemetry
-            backleft.setPower(bl/boost);
-            backright.setPower(fl/boost);
-            frontleft.setPower(br/boost);
-            frontright.setPower(fr/boost);
+            backleft.setPower(bl);
+            backright.setPower(fl);
+            frontleft.setPower(br);
+            frontright.setPower(fr);
 
             telemetry.addData("", "%s %s %s", gamepad1.left_stick_y, gamepad1.left_stick_x, gamepad1.right_stick_x);
             telemetry.addData("", "%s %s %s %s", backleft.getPower(), frontleft.getPower(), backright.getPower(), frontright.getPower());
