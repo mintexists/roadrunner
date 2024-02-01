@@ -10,7 +10,7 @@ public class MeepMeepTestingFar {
 
 
     static int s = 1;
-    static Pose2d startPose = new Pose2d(-36.0, 59*s, Math.toRadians(-90.0 * s));
+    static Pose2d startPose = new Pose2d(-36.0, 65*s, Math.toRadians(-90.0 * s));
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
@@ -53,7 +53,7 @@ public class MeepMeepTestingFar {
                                             .forward(13.0)
                                             .splineToSplineHeading(spikePose, spikePose.getHeading())
                                             .setReversed(true)
-                                            .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
+                                            .splineToSplineHeading(new Pose2d(startPose.getX(), startPose.getY() - (13 * s), startPose.getHeading()), Math.toRadians(90.0 * s))
                                             .setReversed(false)
                                             .lineTo(new Pose2d(startPose.getX(), 59.0 * s, startPose.getHeading()).vec())
                                             .turn(Math.toRadians(90.0 * s))

@@ -57,7 +57,7 @@ public class AutoBlueFar extends LinearOpMode {
                     .forward(13.0)
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(startPose.getX(), startPose.getY() - (13 * s), startPose.getHeading()), Math.toRadians(90.0 * s))
                     .setReversed(false)
                     .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
                     .turn(Math.toRadians(90.0 * s))

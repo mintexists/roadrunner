@@ -19,7 +19,7 @@ public class AutoRedClose extends LinearOpMode {
 
     static int s = -1;
 
-    private static final Pose2d startPose = new Pose2d(12.0, 60 * s, Math.toRadians(-90.0 * s));
+    private static final Pose2d startPose = new Pose2d(12.0, 65 * s, Math.toRadians(-90.0 * s));
 
     private static DcMotorEx arm;
 
@@ -60,7 +60,7 @@ public class AutoRedClose extends LinearOpMode {
                     .forward(13.0)
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(startPose.getX(), startPose.getY() - (13 * s), startPose.getHeading()), Math.toRadians(90.0 * s))
                     .setReversed(false)
                     .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
                     .turn(Math.toRadians(90.0 * s))
