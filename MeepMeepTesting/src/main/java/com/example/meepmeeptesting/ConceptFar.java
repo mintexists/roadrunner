@@ -9,8 +9,8 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class ConceptFar {
 
 
-    static int s = 1;
-    static Pose2d startPose = new Pose2d(-35.25, 58.75*s, Math.toRadians(-90.0 * s));
+    static int s = -1;
+    static Pose2d startPose = new Pose2d(-36, 58.75*s, Math.toRadians(-90.0 * s));
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(1080);
@@ -21,9 +21,9 @@ public class ConceptFar {
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
 //              * s
-            double x = -56;
+            double x = -36;
 //             + s * a *
-            double y = 35.25 * s;
+            double y = 36 * s;
 
             final double tag;
 
@@ -36,7 +36,7 @@ public class ConceptFar {
             }
 
 
-            Pose2d spikePose = new Pose2d(x, y, 0.0);
+            Pose2d spikePose = new Pose2d(x, y, startPose.getHeading() - Math.toRadians(90.0) * a);
 
 
             myBot = new DefaultBotBuilder(meepMeep)
@@ -50,13 +50,13 @@ public class ConceptFar {
 //                                                arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 //                                                arm.setPower(1.0);
                                             })
-                                            .setTangent(Math.toRadians(180))
-                                            .splineToSplineHeading(spikePose, Math.toRadians(-90 * s))//, startPose.getHeading())
-                                            .lineTo(new Vector2d(-35.25 - 11.75 * a * s - 3, y))
+                                            .setTangent(Math.PI)
+                                            .splineToLinearHeading(spikePose, 0.0)//, startPose.getHeading())
+                                            .lineTo(new Vector2d(-36 - 12 * a * s + 3 * a * s, y))
                                             .lineTo(spikePose.vec())
-                                            .lineTo(new Vector2d(x, 23.5*s))
-                                            .splineToConstantHeading(new Vector2d(-47, 11.75*s), 0.0)
-                                            .lineTo(new Vector2d(29.375, 11.75*s))
+                                            .lineTo(new Vector2d(x, 24*s))
+                                            .splineToSplineHeading(new Pose2d(-24, 0, 0.0), 0.0)
+                                            .lineTo(new Vector2d(29.375, 0))
                                             .splineToConstantHeading(new Vector2d(48.5, 35.25*s + tag - 7.5), Math.toRadians(90*s))
                                             .build()
                     );
