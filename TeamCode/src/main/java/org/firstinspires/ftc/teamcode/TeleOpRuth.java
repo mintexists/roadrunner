@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import android.text.method.Touch;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -10,6 +11,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 import com.qualcomm.robotcore.util.Range;
 
+@TeleOp(name = "TeleOpRuth")
 public class TeleOpRuth extends LinearOpMode {
     public DcMotorEx backleft;
     public DcMotorEx backright;
@@ -20,21 +22,24 @@ public class TeleOpRuth extends LinearOpMode {
     public DcMotor arm;
     public Servo airplane;
     public Servo hooklatch;
-    public DcMotor hook;
+    public DcMotorEx hook;
 
     public boolean hookInit() {
-        hook = hardwareMap.get(DcMotor.class, "hook");
+        hook = hardwareMap.get(DcMotorEx.class, "hook");
         hook.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         hook.setDirection(DcMotorSimple.Direction.FORWARD);
         hook.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         hooklatch = hardwareMap.get(Servo.class, "hooklatch");
+        hooklatch.setPosition(0);
 
         return hook != null && hooklatch != null;
     }
 
     public boolean airplaineInit() {
         airplane = hardwareMap.get(Servo.class, "airplane");
+        airplane.setPosition(0);
+
         return airplane != null;
     }
 
@@ -57,11 +62,7 @@ public class TeleOpRuth extends LinearOpMode {
     public boolean gateinit() {
         gate = hardwareMap.get(DcMotorEx.class, "gate");
         gate.setDirection(DcMotorSimple.Direction.FORWARD);
-        gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        gate.setTargetPosition(0);
-        gate.setTargetPositionTolerance(5);
-        gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        gate.setPower(0.5);
+        gate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         return gate != null;
     }
@@ -125,29 +126,25 @@ public class TeleOpRuth extends LinearOpMode {
                 double cos = Math.cos(theta - Math.PI/4);
                 double max = Math.max(Math.abs(sin), Math.abs(cos));
 
-                double bl = (power * sin/max  + turn);// / boost;
-                double br = (power * cos/max  - turn);// / boost;
-                double fl = (power * cos/max  + turn);// / boost;
-                double fr = (power * sin/max  - turn);// / boost;
+                double bl = (power * sin/max);// / boost;
+                double br = (power * cos/max);// / boost;
+                double fl = (power * cos/max);// / boost;
+                double fr = (power * sin/max);// / boost;
 
-                backleft.setPower(bl);
-                backright.setPower(fl);
-                frontleft.setPower(br);
-                frontright.setPower(fr);
+                backleft.setPower(bl - turn);
+                backright.setPower(fl + turn);
+                frontleft.setPower(br - turn);
+                frontright.setPower(fr + turn);
 
-                if (gamepad1.a && airplane.getPosition() == launch) {
-                    airplane.setPosition(1 - airplane.getPosition());
-                }
+                airplane.setPosition(gamepad2.a ? 1 : 0);
 
-                if (gamepad1.b && hooklatch.getPosition() == latch) {
+                if (gamepad2.b && hooklatch.getPosition() == latch) {
                     hooklatch.setPosition(1 - hooklatch.getPosition());
                 }
 
-                double hookp = gamepad1.dpad_up ? 1 : (gamepad1.dpad_down ? -1 : 0);
+                hook.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
 
-                hook.setPower(hookp);
-
-                double gatep = gamepad1.dpad_right ? 0.25 : (gamepad1.dpad_left ? -0.25 : 0);
+                double gatep = gamepad1.right_bumper ? 0.25 : (gamepad1.left_bumper ? -0.25 : 0);
 
                 gate.setPower(gatep);
 

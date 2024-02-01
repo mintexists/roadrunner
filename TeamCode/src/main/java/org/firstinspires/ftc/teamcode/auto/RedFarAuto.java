@@ -53,7 +53,7 @@ public class RedFarAuto extends LinearOpMode {
     private TfodProcessor tfod;
     private AprilTagProcessor aprilTag;
     private DcMotor arm;
-    private DcMotor gate;
+    private DcMotorEx gate;
     private TouchSensor touch;
     /**
      * The variable to store our instance of the vision portal.
@@ -111,6 +111,8 @@ public class RedFarAuto extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
+
+            gate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             while (opModeIsActive()) {
 
