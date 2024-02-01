@@ -32,7 +32,7 @@ public class AutoBlueClose extends LinearOpMode {
 
             double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
 //              * s
-            double x = startPose.getX() - 13.0 * a * s - 7.0 * Math.cos(heading);
+            double x = startPose.getX() - 14.0 * a * s - 7.0 * Math.cos(heading);
 //             + s * a *
             double y = 32.5 * s - 7.0 * Math.sin(heading);
 
@@ -49,7 +49,7 @@ public class AutoBlueClose extends LinearOpMode {
 
 
             return drive.trajectorySequenceBuilder(startPose)
-                    .addTemporalMarker(3.0, () -> {
+                    .addTemporalMarker(3.5, () -> {
                         arm.setTargetPosition(-24500);
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
@@ -69,7 +69,7 @@ public class AutoBlueClose extends LinearOpMode {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 29.0 * s;
+            double y = 31.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
