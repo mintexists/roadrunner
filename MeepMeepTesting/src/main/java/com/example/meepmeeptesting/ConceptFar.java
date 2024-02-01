@@ -23,7 +23,7 @@ public class ConceptFar {
 //              * s
             double x = -56;
 //             + s * a *
-            double y = 35.75 * s;
+            double y = 35.25 * s;
 
             final double tag;
 
