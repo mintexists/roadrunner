@@ -80,7 +80,7 @@ public class BlueFarAuto extends LinearOpMode {
         gate = hardwareMap.get(DcMotorEx.class, "gate");
         gate.setDirection(DcMotorSimple.Direction.FORWARD);
         gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        gate.setTargetPosition(-72);
+        gate.setTargetPosition(-100);
         gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         gate.setPower(1);
 //        gate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
