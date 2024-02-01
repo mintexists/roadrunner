@@ -98,12 +98,12 @@ public class Driveonly extends LinearOpMode {
             double fl = power * cos/max  + turn;
             double fr = power * sin/max  - turn;
 
-            if ((power + Math.abs(turn)) > 1) {
-                bl /= power + Math.abs(turn);
-                br /= power + Math.abs(turn);
-                fl /= power + Math.abs(turn);
-                fr /= power + Math.abs(turn);
-            }
+//            if ((power + Math.abs(turn)) > 1) {
+//                bl /= power + Math.abs(turn);
+//                br /= power + Math.abs(turn);
+//                fl /= power + Math.abs(turn);
+//                fr /= power + Math.abs(turn);
+//            }
 
             // Setup a variable for each drive wheel to save power level for telemetry
             backleft.setPower(bl/boost);

@@ -38,15 +38,14 @@ public class AutoBlueFar extends LinearOpMode {
 
 
             if (angle < -15.0) {
-                tag += 6.5;
+                tag += 5.5;
             } else if (angle > 15.0) {
                 tag += -6.5;
             }
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(45.0, 36.0 * s + tag, 0.0);
-
+            Pose2d tagPose = new Pose2d(49.0, 36.0 * s + tag, 0.0);
 
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
@@ -63,6 +62,7 @@ public class AutoBlueFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
+                    .waitSeconds(2)
                     .build();
         } else {
             double heading = startPose.getHeading();
@@ -72,7 +72,7 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(49.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
