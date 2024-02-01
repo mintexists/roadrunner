@@ -42,7 +42,7 @@ public class RedFarAuto extends LinearOpMode {
             "Pixel",
             "Red"
     };
-    int s = 1;
+    int s = -1;
 
     final private Pose2d startPose = new Pose2d(-36.0, 63.5 * s, Math.toRadians(-90.0 * s));
     int id;
@@ -53,7 +53,7 @@ public class RedFarAuto extends LinearOpMode {
     private TfodProcessor tfod;
     private AprilTagProcessor aprilTag;
     private DcMotor arm;
-    private DcMotor gate;
+    private DcMotorEx gate;
     private TouchSensor touch;
     /**
      * The variable to store our instance of the vision portal.
@@ -90,7 +90,7 @@ public class RedFarAuto extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-//        boolean driver = driveinit();
+        //boolean driver = driveinit();
 
         initTfod();
 
@@ -320,6 +320,24 @@ public class RedFarAuto extends LinearOpMode {
 
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoRedFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
+
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+                arm.setTargetPosition(0);
+
+                drive.followTrajectorySequence(
+                        drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .lineTo(new Vector2d(48.0, 12.0*s))
+                                .forward(6)
+                                .build()
+                );
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+
+                visionPortal.setProcessorEnabled(tfod, false);
+
             }
 
             telemetry.addData("", " ");

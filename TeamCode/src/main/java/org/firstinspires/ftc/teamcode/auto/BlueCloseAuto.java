@@ -4,6 +4,8 @@ package org.firstinspires.ftc.teamcode.auto;
 // lemme know if this is legible or if theres a better way to do this :3
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -76,7 +78,6 @@ public class BlueCloseAuto extends LinearOpMode {
     }
 
     public void gateinit() {
-
         gate = hardwareMap.get(DcMotorEx.class, "gate");
         gate.setDirection(DcMotorSimple.Direction.FORWARD);
         gate.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
@@ -84,7 +85,6 @@ public class BlueCloseAuto extends LinearOpMode {
         gate.setTargetPositionTolerance(5);
         gate.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         gate.setPower(0.25);
-
     }
 
     @Override
@@ -106,11 +106,12 @@ public class BlueCloseAuto extends LinearOpMode {
             telemetry.update();
         }
 
+        gateinit();
+
         waitForStart();
 
         if (opModeIsActive()) {
 
-            gateinit();
             while (opModeIsActive()) {
 
                 if (visionPortal.getProcessorEnabled(tfod)) telemetryTfod();
@@ -301,7 +302,7 @@ public class BlueCloseAuto extends LinearOpMode {
 //        telemetry.addLine("\nkey:\nXYZ = X (Right), Y (Forward), Z (Up) dist.");
 //        telemetry.addLine("PRY = Pitch, Roll & Yaw (XYZ Rotation)");
 //        telemetry.addLine("RBE = Range, Bearing & Elevation");
-
+//
 //    }   // end method telemetryAprilTag()
 
     /**
@@ -319,6 +320,24 @@ public class BlueCloseAuto extends LinearOpMode {
 
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoBlueClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
+
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+                arm.setTargetPosition(0);
+
+                drive.followTrajectorySequence(
+                        drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .lineTo(new Vector2d(48.0, 12.0*s))
+                                .forward(6)
+                                .build()
+                );
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+
+                visionPortal.setProcessorEnabled(tfod, false);
+
             }
 
             telemetry.addData("", " ");

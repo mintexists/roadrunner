@@ -4,9 +4,13 @@ package org.firstinspires.ftc.teamcode.auto;
 // lemme know if this is legible or if theres a better way to do this :3
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
+import com.acmerobotics.roadrunner.geometry.Vector2d;
+import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
@@ -38,9 +42,9 @@ public class RedCloseAuto extends LinearOpMode {
             "Pixel",
             "Red"
     };
-    int s = 1;
+    int s = -1;
 
-    final private Pose2d startPose = new Pose2d(-36.0, 65 * s, Math.toRadians(-90.0 * s));
+    final private Pose2d startPose = new Pose2d(12.0, 65 * s, Math.toRadians(-90.0 * s));
     int id;
     private SampleMecanumDrive drive;
     /**
@@ -49,7 +53,7 @@ public class RedCloseAuto extends LinearOpMode {
     private TfodProcessor tfod;
     private AprilTagProcessor aprilTag;
     private DcMotor arm;
-    private DcMotor gate;
+    private DcMotoEx gate;
     private TouchSensor touch;
     /**
      * The variable to store our instance of the vision portal.
@@ -74,19 +78,19 @@ public class RedCloseAuto extends LinearOpMode {
     }
 
     public void gateinit() {
-
-        gate = hardwareMap.get(DcMotor.class, "gate");
-        gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        gate.setTargetPosition(48);
-        gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        gate.setPower(0.1);
-
+        gate = hardwareMap.get(DcMotorEx.class, "gate");
+        gate.setDirection(DcMotorSimple.Direction.FORWARD);
+        gate.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        gate.setTargetPosition(-120);
+        gate.setTargetPositionTolerance(5);
+        gate.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        gate.setPower(0.25);
     }
 
     @Override
     public void runOpMode() {
 
-//        boolean driver = driveinit();
+        //boolean driver = driveinit();
 
         initTfod();
 
@@ -102,11 +106,12 @@ public class RedCloseAuto extends LinearOpMode {
             telemetry.update();
         }
 
+        gateinit();
+
         waitForStart();
 
         if (opModeIsActive()) {
 
-            gateinit();
             while (opModeIsActive()) {
 
                 if (visionPortal.getProcessorEnabled(tfod)) telemetryTfod();
@@ -315,6 +320,24 @@ public class RedCloseAuto extends LinearOpMode {
 
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoRedClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
+
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+                arm.setTargetPosition(0);
+
+                drive.followTrajectorySequence(
+                        drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                                .lineTo(new Vector2d(48.0, 12.0*s))
+                                .forward(6)
+                                .build()
+                );
+                while (arm.isBusy() && opModeIsActive()) {
+                    sleep(20);
+                }
+
+                visionPortal.setProcessorEnabled(tfod, false);
+                
             }
 
             telemetry.addData("", " ");
