@@ -32,7 +32,7 @@ public class AutoBlueFar extends LinearOpMode {
         if (!(angle >= -15.0 && angle <= 15.0)) {
             double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
 //              * s
-            double x = startPose.getX() - 13.0 * a * s - + 7.0 * Math.cos(heading);
+            double x = startPose.getX() - 13.0 * a * s - 7.0 * Math.cos(heading);
 //             + s * a *
             double y = 32.5 * s - 7.0 * Math.sin(heading);
 
