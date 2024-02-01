@@ -29,15 +29,12 @@ public class AutoBlueClose extends LinearOpMode {
         double tag = -7.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
-//            double heading = startPose.getHeading() - Math.toRadians(30.0) * a;
-//
-//            double x = startPose.getX() + 12.0 * a * s - 9.0 * Math.cos(heading);
-//            double y = 24.0 * s - 9.0 * Math.sin(heading);
-            double heading = startPose.getHeading() - Math.toRadians(30.0) * a;
+
+            double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
 //              * s
-            double x = startPose.getX() - 12.0 * a * s - +9.0 * Math.cos(heading);
+            double x = startPose.getX() - 13.0 * a * s - 7.0 * Math.cos(heading);
 //             + s * a *
-            double y = 24.0 * s - 9.0 * Math.sin(heading);
+            double y = 32.5 * s - 7.0 * Math.sin(heading);
 
 
             if (angle < -15.0) {
@@ -48,7 +45,7 @@ public class AutoBlueClose extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(45.0, 36.0 * s + tag, 0.0);
 
 
             return drive.trajectorySequenceBuilder(startPose)
@@ -66,9 +63,6 @@ public class AutoBlueClose extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
-//                    .forward(2)
-//                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
-//                    .forward(12)
                     .build();
         } else {
             double heading = startPose.getHeading();
@@ -94,9 +88,6 @@ public class AutoBlueClose extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
-//                    .forward(2)
-//                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
-//                    .forward(12)
                     .build();
         }
     }

@@ -47,6 +47,7 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d tagPose = new Pose2d(45.0, 36.0 * s + tag, 0.0);
 
+
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
@@ -62,9 +63,6 @@ public class AutoBlueFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
-//                    .forward(2)
-//                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
-//                    .forward(12)
                     .build();
         } else {
             double heading = startPose.getHeading();
@@ -90,9 +88,6 @@ public class AutoBlueFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
-//                    .forward(2)
-//                    .splineToConstantHeading(new Vector2d(48.0, 12.0*s), 0.0)
-//                    .forward(12)
                     .build();
         }
     }

@@ -7,8 +7,8 @@ import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
 public class MeepMeepTestingClose {
-    static int s = 1;
-    static Pose2d startPose = new Pose2d(12.0, 59*s, Math.toRadians(-90.0 * s));
+    static int s = -1;
+    static Pose2d startPose = new Pose2d(12.0, 59.0*s, Math.toRadians(-90.0 * s));
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(1000);
 
@@ -19,15 +19,11 @@ public class MeepMeepTestingClose {
         double tag = -7.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
-//            double heading = startPose.getHeading() - Math.toRadians(30.0) * a;
-//
-//            double x = startPose.getX() + 12.0 * a * s - 9.0 * Math.cos(heading);
-//            double y = 24.0 * s - 9.0 * Math.sin(heading);
-            double heading = startPose.getHeading() - Math.toRadians(30.0)*a;
+            double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
 //              * s
-            double x = startPose.getX() - 12.0 * a * s - + 9.0 * Math.cos(heading);
+            double x = startPose.getX() - 13.0 * a * s - 7.0 * Math.cos(heading);
 //             + s * a *
-            double y = 24.0 * s - 9.0 * Math.sin(heading);
+            double y = 32.5 * s - 7.0 * Math.sin(heading);
 
 
             if (angle < -15.0) {
@@ -38,7 +34,7 @@ public class MeepMeepTestingClose {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(45.0, 36.0 * s + tag, 0.0);
 
 
             myBot = new DefaultBotBuilder(meepMeep)
@@ -54,7 +50,7 @@ public class MeepMeepTestingClose {
                                             .setReversed(true)
                                             .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
                                             .setReversed(false)
-                                            .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
+                                            .lineTo(new Pose2d(startPose.getX(), 59.0 * s, startPose.getHeading()).vec())
                                             .turn(Math.toRadians(90.0 * s))
                                             .lineTo(new Vector2d(24.0, 59.0 * s))
                                             .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
@@ -85,7 +81,7 @@ public class MeepMeepTestingClose {
                                             .setReversed(true)
                                             .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
                                             .setReversed(false)
-                                            .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
+                                            .lineTo(new Pose2d(startPose.getX(), 59.0 * s, startPose.getHeading()).vec())
                                             .turn(Math.toRadians(90.0 * s))
                                             .lineTo(new Vector2d(24.0, 59.0 * s))
                                             .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
