@@ -27,25 +27,25 @@ public class AutoRedFar extends LinearOpMode {
     public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
-        double tag = -6.5;
+        double tag = -7.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
             double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
 //              * s
-            double x = startPose.getX() - 13.0 * a * s - 7.0 * Math.cos(heading);
+            double x = startPose.getX() - 14.0 * a * s - 7.0 * Math.cos(heading);
 //             + s * a *
             double y = 32.5 * s - 7.0 * Math.sin(heading);
 
 
             if (angle < -15.0) {
-                tag += 6.0;
+                tag += 6.5;
             } else if (angle > 15.0) {
-                tag += -6.0;
+                tag += -5.5;
             }
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(46.5, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
 
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
@@ -68,11 +68,11 @@ public class AutoRedFar extends LinearOpMode {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 31.0 * s;
+            double y = 30.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(47.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);

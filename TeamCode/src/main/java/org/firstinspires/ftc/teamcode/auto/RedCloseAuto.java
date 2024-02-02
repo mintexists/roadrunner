@@ -53,7 +53,7 @@ public class RedCloseAuto extends LinearOpMode {
     private TfodProcessor tfod;
     private AprilTagProcessor aprilTag;
     private DcMotor arm;
-    private DcMotoEx gate;
+    private DcMotorEx gate;
     private TouchSensor touch;
     /**
      * The variable to store our instance of the vision portal.

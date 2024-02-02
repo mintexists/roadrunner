@@ -112,8 +112,6 @@ public class RedFarAuto extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            gate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             while (opModeIsActive()) {
 
                 if (visionPortal.getProcessorEnabled(tfod)) telemetryTfod();

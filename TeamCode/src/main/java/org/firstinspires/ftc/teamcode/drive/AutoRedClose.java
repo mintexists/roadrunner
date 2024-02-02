@@ -71,11 +71,11 @@ public class AutoRedClose extends LinearOpMode {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 29.0 * s;
+            double y = 31.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(49.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
