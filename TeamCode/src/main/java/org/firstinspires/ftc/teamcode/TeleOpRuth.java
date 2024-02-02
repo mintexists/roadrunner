@@ -131,10 +131,10 @@ public class TeleOpRuth extends LinearOpMode {
                 double fl = (power * cos/max);// / boost;
                 double fr = (power * sin/max);// / boost;
 
-                backleft.setPower(bl - turn);
-                backright.setPower(fl + turn);
-                frontleft.setPower(br - turn);
-                frontright.setPower(fr + turn);
+                backleft.setPower(bl + turn);
+                backright.setPower(fl - turn);
+                frontleft.setPower(br + turn);
+                frontright.setPower(fr - turn);
 
                 airplane.setPosition(gamepad2.a ? 1 : 0);
 
