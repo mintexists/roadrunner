@@ -62,7 +62,7 @@ public class AutoBlueFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
-                    .waitSeconds(2)
+//                    .waitSeconds(2)
                     .build();
         } else {
             double heading = startPose.getHeading();
@@ -88,6 +88,7 @@ public class AutoBlueFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
+//                    .waitSeconds(1)
                     .build();
         }
     }

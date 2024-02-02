@@ -181,13 +181,16 @@ public class RedFarAuto extends LinearOpMode {
 
                 // The following default settings are available to un-comment and edit as needed to
                 // set parameters for custom models.
-                //.setModelLabels(LABELS)
+                // .setModelLabels(LABELS)
                 //.setIsModelTensorFlow2(true)
                 //.setIsModelQuantized(true)
                 //.setModelInputSize(300)
                 //.setModelAspectRatio(16.0 / 9.0)
 
                 .build();
+
+        tfod.setMinResultConfidence(0.45f);
+        tfod.setClippingMargins(0, 240, 0, 0);
 
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
