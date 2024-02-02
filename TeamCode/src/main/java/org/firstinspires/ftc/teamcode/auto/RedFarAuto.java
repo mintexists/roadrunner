@@ -331,9 +331,6 @@ public class RedFarAuto extends LinearOpMode {
                                 .forward(6)
                                 .build()
                 );
-                while (arm.isBusy() && opModeIsActive()) {
-                    sleep(20);
-                }
 
                 visionPortal.setProcessorEnabled(tfod, false);
 

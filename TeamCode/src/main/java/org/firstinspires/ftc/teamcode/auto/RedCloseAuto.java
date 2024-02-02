@@ -321,7 +321,7 @@ public class RedCloseAuto extends LinearOpMode {
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoRedClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
 
-                while (arm.isBusy() && opModeIsActive()) {
+                while ((arm.getCurrentPosition() > -24450) && opModeIsActive()) {
                     sleep(20);
                 }
                 arm.setTargetPosition(0);
@@ -332,9 +332,6 @@ public class RedCloseAuto extends LinearOpMode {
                                 .forward(6)
                                 .build()
                 );
-                while (arm.isBusy() && opModeIsActive()) {
-                    sleep(20);
-                }
 
                 visionPortal.setProcessorEnabled(tfod, false);
                 
