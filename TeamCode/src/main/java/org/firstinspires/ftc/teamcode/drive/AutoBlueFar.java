@@ -38,7 +38,7 @@ public class AutoBlueFar extends LinearOpMode {
 
 
             if (angle < -15.0) {
-                tag += 6.0;
+                tag += 7.0;
             } else if (angle > 15.0) {
                 tag += -6.0;
             }
@@ -53,10 +53,10 @@ public class AutoBlueFar extends LinearOpMode {
                         arm.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                         arm.setPower(1.0);
                     })
-                    .forward(13.0)
+                    .forward(14.0)
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
-                    .splineToSplineHeading(new Pose2d(startPose.getX(), startPose.getY() - (13 * s), startPose.getHeading()), Math.toRadians(90.0 * s))
+                    .splineToSplineHeading(new Pose2d(startPose.getX(), startPose.getY() - (14 * s), startPose.getHeading()), Math.toRadians(90.0 * s))
                     .setReversed(false)
                     .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
                     .turn(Math.toRadians(90.0 * s))
@@ -68,11 +68,11 @@ public class AutoBlueFar extends LinearOpMode {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 31.0 * s;
+            double y = 30.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(47.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(46.5, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);

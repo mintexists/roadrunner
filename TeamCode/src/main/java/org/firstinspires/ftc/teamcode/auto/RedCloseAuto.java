@@ -189,6 +189,9 @@ public class RedCloseAuto extends LinearOpMode {
 
                 .build();
 
+        tfod.setMinResultConfidence(0.45f);
+        tfod.setClippingMargins(0, 240, 0, 0);
+
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
 

@@ -32,20 +32,20 @@ public class AutoBlueClose extends LinearOpMode {
 
             double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
 //              * s
-            double x = startPose.getX() - 14.0 * a * s - 7.0 * Math.cos(heading);
+            double x = startPose.getX() - 13.0 * a * s - 7.0 * Math.cos(heading);
 //             + s * a *
             double y = 32.5 * s - 7.0 * Math.sin(heading);
 
 
             if (angle < -15.0) {
-                tag += 5.5;
+                tag += 6.5;
             } else if (angle > 15.0) {
                 tag += -6.5;
             }
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(49.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
 
 
             return drive.trajectorySequenceBuilder(startPose)
@@ -73,7 +73,7 @@ public class AutoBlueClose extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(49.0, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(48.0, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
