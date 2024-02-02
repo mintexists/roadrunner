@@ -45,7 +45,7 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(46.5, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(47.5, 36.0 * s + tag, 0.0);
 
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
@@ -72,7 +72,7 @@ public class AutoBlueFar extends LinearOpMode {
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
-            Pose2d tagPose = new Pose2d(46.5, 36.0 * s + tag, 0.0);
+            Pose2d tagPose = new Pose2d(47.5, 36.0 * s + tag, 0.0);
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
                         arm.setTargetPosition(-24500);
