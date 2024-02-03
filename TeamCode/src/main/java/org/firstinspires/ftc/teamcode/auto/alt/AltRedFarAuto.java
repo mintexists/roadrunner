@@ -331,6 +331,7 @@ public class AltRedFarAuto extends LinearOpMode {
                 drive.followTrajectorySequence(
                         drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                                 .lineTo(new Vector2d(48.0, 12.0*s))
+//                                .lineTo(new Vector2d(48.0, 60.0*s))
                                 .forward(6)
                                 .build()
                 );

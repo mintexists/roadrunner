@@ -30,7 +30,7 @@ public class AutoRedClose extends LinearOpMode {
     public static TrajectorySequence auto(double angle, SampleMecanumDrive drive, DcMotor arm) {
         int a = (angle < 0 ? -1 : 1);
 
-        double tag = -7.5;
+        double tag = -6.5;
 
         if (!(angle >= -15.0 && angle <= 15.0)) {
             double heading = startPose.getHeading() - Math.toRadians(50.0) * a;
@@ -61,8 +61,8 @@ public class AutoRedClose extends LinearOpMode {
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
                     .splineToSplineHeading(new Pose2d(startPose.getX(), startPose.getY() - (13 * s), startPose.getHeading()), Math.toRadians(90.0 * s))
-                    .setReversed(false)
                     .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
+                    .setReversed(false)
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
@@ -86,8 +86,8 @@ public class AutoRedClose extends LinearOpMode {
                     .splineToSplineHeading(spikePose, spikePose.getHeading())
                     .setReversed(true)
                     .splineToSplineHeading(new Pose2d(startPose.getX(), 47.0 * s, startPose.getHeading()), Math.toRadians(90.0 * s))
-                    .setReversed(false)
                     .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
+                    .setReversed(false)
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))

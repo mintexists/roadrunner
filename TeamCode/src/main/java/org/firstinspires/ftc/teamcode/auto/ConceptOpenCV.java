@@ -1,15 +1,20 @@
 package org.firstinspires.ftc.teamcode.auto;
 
+import android.opengl.Matrix;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.opencv.core.Mat;
+import org.opencv.core.Size;
 import org.opencv.imgproc.Imgproc;
 import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvPipeline;
 
+@Autonomous(name = "CVVVVV")
 public class ConceptOpenCV extends LinearOpMode {
 
     int spike;
@@ -18,16 +23,14 @@ public class ConceptOpenCV extends LinearOpMode {
     class conceptPipeline extends OpenCvPipeline {
 
         Mat mat = new Mat();
-        Mat templ = new Mat();
-        Mat results = new Mat();
-
-        @Override
-        public void init(Mat input) {
-        }
 
         @Override
         public Mat processFrame(Mat input) {
-            Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2GRAY);
+
+            Mat mask = new Mat();
+
+            Imgproc.filter2D(input, mat, 1, new Mat());
+
             return mat;
         }
     }
