@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.drive;
+package org.firstinspires.ftc.teamcode.drive.alt;
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
@@ -7,12 +7,13 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.TouchSensor;
 
+import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 
 
-public class ConceptRedFar extends LinearOpMode {
+public class AltBlueFar extends LinearOpMode {
 
-    static private final int s = -1;
+    static private final int s = 1;
 
     static private final Pose2d startPose = new Pose2d(-36.0, 65 * s, Math.toRadians(-90.0 * s));
 
@@ -37,14 +38,15 @@ public class ConceptRedFar extends LinearOpMode {
 
 
             if (angle < -15.0) {
-                tag += 6.0;
+                tag += 6.5;
             } else if (angle > 15.0) {
-                tag += -6.0;
+                tag += -6.5;
             }
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
             Pose2d tagPose = new Pose2d(49.0, 36.0 * s + tag, 0.0);
+
 
             return drive.trajectorySequenceBuilder(startPose)
                     .addTemporalMarker(3.0, () -> {
@@ -61,13 +63,12 @@ public class ConceptRedFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, 0.0)
-//                    .waitSeconds(2)
                     .build();
         } else {
             double heading = startPose.getHeading();
 
             double x = startPose.getX();
-            double y = 29.0 * s;
+            double y = 31.0 * s;
 
             Pose2d spikePose = new Pose2d(x, y, heading);
 
@@ -87,7 +88,6 @@ public class ConceptRedFar extends LinearOpMode {
                     .turn(Math.toRadians(90.0 * s))
                     .lineTo(new Vector2d(24.0, 59.0 * s))
                     .splineToLinearHeading(tagPose, 0.0)
-//                    .waitSeconds(1.0)
                     .build();
         }
     }

@@ -39,7 +39,6 @@ public class RedCloseAuto extends LinearOpMode {
     private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/red15.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-            "Pixel",
             "Red"
     };
     int s = -1;
@@ -181,7 +180,7 @@ public class RedCloseAuto extends LinearOpMode {
 
                 // The following default settings are available to un-comment and edit as needed to
                 // set parameters for custom models.
-                //.setModelLabels(LABELS)
+                .setModelLabels(LABELS)
                 //.setIsModelTensorFlow2(true)
                 //.setIsModelQuantized(true)
                 //.setModelInputSize(300)
@@ -321,7 +320,7 @@ public class RedCloseAuto extends LinearOpMode {
             double x = (recognition.getLeft() + recognition.getRight()) / 2;
             double y = (recognition.getTop() + recognition.getBottom()) / 2;
 
-            if (recognition.getLabel().equals("Pixel")) {
+            if (recognition.getLabel().equals("Red")) {
                 drive.followTrajectorySequence(AutoRedClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
 
                 while ((arm.getCurrentPosition() > -24450) && opModeIsActive()) {

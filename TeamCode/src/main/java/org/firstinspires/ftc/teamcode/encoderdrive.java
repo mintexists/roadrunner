@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-@TeleOp(name = "Encoder Driver")
 public class encoderdrive extends LinearOpMode {
 
     final private double R2D3 = Math.sqrt(2);

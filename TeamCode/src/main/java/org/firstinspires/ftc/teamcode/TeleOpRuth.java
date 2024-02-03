@@ -95,6 +95,7 @@ public class TeleOpRuth extends LinearOpMode {
         boolean gateinit = gateinit();
         boolean hookinit = hookInit();
         double latch = hooklatch.getPosition();
+        boolean released = false;
         boolean apinit = airplaineInit();
 
         while (opModeInInit() && !isStopRequested()) {
@@ -139,9 +140,10 @@ public class TeleOpRuth extends LinearOpMode {
 
                 if (gamepad2.b && hooklatch.getPosition() == latch) {
                     hooklatch.setPosition(1 - hooklatch.getPosition());
+                    released = true;
                 }
 
-                hook.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
+                if (released) hook.setPower(gamepad2.left_trigger - gamepad2.right_trigger);
 
                 double gatep = gamepad1.right_bumper ? 0.25 : (gamepad1.left_bumper ? -0.25 : 0);
 

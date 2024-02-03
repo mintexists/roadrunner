@@ -1,11 +1,10 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.alt;
 
 // courtesy of Ruth 2024 :3
 // lemme know if this is legible or if theres a better way to do this :3
 
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.acmerobotics.roadrunner.geometry.Vector2d;
-import com.acmerobotics.roadrunner.trajectory.Trajectory;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -18,16 +17,17 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.teamcode.drive.AutoBlueClose;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.alt.AltBlueClose;
+import org.firstinspires.ftc.teamcode.drive.alt.AltRedClose;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
-@Autonomous(name = "5276 BlueCloseAuto")
-public class BlueCloseAuto extends LinearOpMode {
+@Autonomous(name = "Blue Close", group = "Alt")
+public class AltBlueCloseAuto extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
@@ -43,7 +43,7 @@ public class BlueCloseAuto extends LinearOpMode {
     };
     int s = 1;
 
-    final private Pose2d startPose = new Pose2d(12.0, 65 * s, Math.toRadians(-90.0 * s));
+    final private Pose2d startPose = new Pose2d(12.0, 63.5 * s, Math.toRadians(-90.0 * s));
     int id;
     private SampleMecanumDrive drive;
     /**
@@ -79,10 +79,10 @@ public class BlueCloseAuto extends LinearOpMode {
     public void gateinit() {
         gate = hardwareMap.get(DcMotorEx.class, "gate");
         gate.setDirection(DcMotorSimple.Direction.FORWARD);
-        gate.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+        gate.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         gate.setTargetPosition(-120);
         gate.setTargetPositionTolerance(5);
-        gate.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        gate.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         gate.setPower(0.25);
     }
 
@@ -183,10 +183,13 @@ public class BlueCloseAuto extends LinearOpMode {
                 .setModelLabels(LABELS)
                 //.setIsModelTensorFlow2(true)
                 //.setIsModelQuantized(true)
-                //.setModelInputSize(300)
-                //.setModelAspectRatio(16.0 / 9.0)
+//                .setModelInputSize(300)
+                .setModelAspectRatio(16.0 / 9.0)
 
                 .build();
+
+        tfod.setMinResultConfidence(0.45f);
+        tfod.setClippingMargins(0, 240, 0, 0);
 
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
@@ -318,7 +321,7 @@ public class BlueCloseAuto extends LinearOpMode {
             double y = (recognition.getTop() + recognition.getBottom()) / 2;
 
             if (recognition.getLabel().equals("Blue")) {
-                drive.followTrajectorySequence(AutoBlueClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
+                drive.followTrajectorySequence(AltBlueClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
 
                 while ((arm.getCurrentPosition() > -24450) && opModeIsActive()) {
                     sleep(20);
@@ -346,4 +349,6 @@ public class BlueCloseAuto extends LinearOpMode {
     }   // end method telemetryTfod()
 
     // todo: write your comment here
+
+    // HALLOOOO
 }

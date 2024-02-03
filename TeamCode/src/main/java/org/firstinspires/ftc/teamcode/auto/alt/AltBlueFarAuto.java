@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.auto;
+package org.firstinspires.ftc.teamcode.auto.alt;
 
 // courtesy of Ruth 2024 :3
 // lemme know if this is legible or if theres a better way to do this :3
@@ -17,30 +17,31 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
-import org.firstinspires.ftc.teamcode.drive.ConceptRedFar;
 import org.firstinspires.ftc.teamcode.drive.SampleMecanumDrive;
+import org.firstinspires.ftc.teamcode.drive.alt.AltBlueFar;
+import org.firstinspires.ftc.teamcode.drive.alt.AltRedClose;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import java.util.List;
 
-@Autonomous(name = "CONCEPT RED FFARRR")
-public class ConceptRedFarAuto extends LinearOpMode {
+@Autonomous(name = "Blue Far", group = "Alt")
+public class AltBlueFarAuto extends LinearOpMode {
 
     private static final boolean USE_WEBCAM = true;  // true for webcam, false for phone camera
 
     // TFOD_MODEL_ASSET points to a model file stored in the project Asset location,
     // this is only used for Android Studio when using models in Assets.
-    private static final String TFOD_MODEL_ASSET = "red15.tflite";
+    private static final String TFOD_MODEL_ASSET = "blue15.tflite";
     // TFOD_MODEL_FILE points to a model file stored onboard the Robot Controller's storage,
     // this is used when uploading models directly to the RC using the model upload interface.
-    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/red15.tflite";
+    private static final String TFOD_MODEL_FILE = "/sdcard/FIRST/tflitemodels/blue15.tflite";
     // Define the labels recognized in the model for TFOD (must be in training order!)
     private static final String[] LABELS = {
-            "Red"
+            "Blue"
     };
-    int s = -1;
+    int s = 1;
 
     final private Pose2d startPose = new Pose2d(-36.0, 63.5 * s, Math.toRadians(-90.0 * s));
     int id;
@@ -319,8 +320,8 @@ public class ConceptRedFarAuto extends LinearOpMode {
             double x = (recognition.getLeft() + recognition.getRight()) / 2;
             double y = (recognition.getTop() + recognition.getBottom()) / 2;
 
-            if (recognition.getLabel().equals("Red")) {
-                drive.followTrajectorySequence(ConceptRedFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
+            if (recognition.getLabel().equals("Blue")) {
+                drive.followTrajectorySequence(AltBlueFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
 
                 while ((arm.getCurrentPosition() > -24450) && opModeIsActive()) {
                     sleep(20);
