@@ -112,8 +112,6 @@ public class RedFarAuto extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-            gate.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-
             while (opModeIsActive()) {
 
                 if (visionPortal.getProcessorEnabled(tfod)) telemetryTfod();
@@ -186,10 +184,13 @@ public class RedFarAuto extends LinearOpMode {
                 //.setModelLabels(LABELS)
                 //.setIsModelTensorFlow2(true)
                 //.setIsModelQuantized(true)
-                //.setModelInputSize(300)
-                //.setModelAspectRatio(16.0 / 9.0)
+//                .setModelInputSize(300)
+                .setModelAspectRatio(16.0 / 9.0)
 
                 .build();
+
+        tfod.setMinResultConfidence(0.45f);
+        tfod.setClippingMargins(0, 240, 0, 0);
 
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
@@ -323,7 +324,7 @@ public class RedFarAuto extends LinearOpMode {
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoRedFar.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
 
-                while (arm.isBusy() && opModeIsActive()) {
+                while ((arm.getCurrentPosition() > -24450) && opModeIsActive()) {
                     sleep(20);
                 }
                 arm.setTargetPosition(0);
@@ -334,9 +335,6 @@ public class RedFarAuto extends LinearOpMode {
                                 .forward(6)
                                 .build()
                 );
-                while (arm.isBusy() && opModeIsActive()) {
-                    sleep(20);
-                }
 
                 visionPortal.setProcessorEnabled(tfod, false);
 

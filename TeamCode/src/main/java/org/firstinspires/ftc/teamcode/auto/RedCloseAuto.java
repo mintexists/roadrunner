@@ -53,7 +53,7 @@ public class RedCloseAuto extends LinearOpMode {
     private TfodProcessor tfod;
     private AprilTagProcessor aprilTag;
     private DcMotor arm;
-    private DcMotoEx gate;
+    private DcMotorEx gate;
     private TouchSensor touch;
     /**
      * The variable to store our instance of the vision portal.
@@ -189,6 +189,9 @@ public class RedCloseAuto extends LinearOpMode {
 
                 .build();
 
+        tfod.setMinResultConfidence(0.45f);
+        tfod.setClippingMargins(0, 240, 0, 0);
+
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder();
 
@@ -321,7 +324,7 @@ public class RedCloseAuto extends LinearOpMode {
             if (recognition.getLabel().equals("Pixel")) {
                 drive.followTrajectorySequence(AutoRedClose.auto(recognition.estimateAngleToObject(AngleUnit.DEGREES), drive, arm));
 
-                while (arm.isBusy() && opModeIsActive()) {
+                while ((arm.getCurrentPosition() > -24450) && opModeIsActive()) {
                     sleep(20);
                 }
                 arm.setTargetPosition(0);
@@ -332,9 +335,6 @@ public class RedCloseAuto extends LinearOpMode {
                                 .forward(6)
                                 .build()
                 );
-                while (arm.isBusy() && opModeIsActive()) {
-                    sleep(20);
-                }
 
                 visionPortal.setProcessorEnabled(tfod, false);
                 

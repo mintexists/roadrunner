@@ -96,7 +96,6 @@ public class TeleOpRuth extends LinearOpMode {
         boolean hookinit = hookInit();
         double latch = hooklatch.getPosition();
         boolean apinit = airplaineInit();
-        double launch = airplane.getPosition();
 
         while (opModeInInit() && !isStopRequested()) {
             telemetry.addLine()
@@ -113,7 +112,7 @@ public class TeleOpRuth extends LinearOpMode {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
 
-                double boost = Math.abs(3.0 - gamepad1.right_trigger * 2.0);
+                double slow = gamepad1.right_trigger + 1;
 
                 double y = -gamepad1.left_stick_y;
                 double x = gamepad1.left_stick_x;
@@ -131,10 +130,10 @@ public class TeleOpRuth extends LinearOpMode {
                 double fl = (power * cos/max);// / boost;
                 double fr = (power * sin/max);// / boost;
 
-                backleft.setPower(bl + turn);
-                backright.setPower(fl - turn);
-                frontleft.setPower(br + turn);
-                frontright.setPower(fr - turn);
+                backleft.setPower((bl + turn) / slow);
+                backright.setPower((fl - turn) / slow);
+                frontleft.setPower((br + turn) / slow);
+                frontright.setPower((fr - turn) / slow);
 
                 airplane.setPosition(gamepad2.a ? 1 : 0);
 
