@@ -10,12 +10,12 @@ public class MeepMeepTestingFar {
 
 
     static int s = -1;
-    static Pose2d startPose = new Pose2d(-36.0, 65*s, Math.toRadians(-90.0 * s));
+    static Pose2d startPose = new Pose2d(-36.0, 63.5 * s, Math.toRadians(-90.0 * s));
 
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
-        double angle = 0.0;
+        double angle = -20.0;
         int a = (angle < 0 ? -1 : 1);
         RoadRunnerBotEntity myBot;
 
@@ -59,8 +59,7 @@ public class MeepMeepTestingFar {
                                             .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
                                             .turn(Math.toRadians(90.0 * s))
                                             .lineTo(new Vector2d(24.0, 59.0 * s))
-                                            .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
-                                            .waitSeconds(2)
+                                            .splineToConstantHeading(tagPose.vec(), Math.toRadians(90))
                                             .build()
                     );
         } else {
@@ -82,10 +81,13 @@ public class MeepMeepTestingFar {
                                     })
                                     .forward(13.0)
                                     .splineToSplineHeading(spikePose, spikePose.getHeading())
+                                    .setReversed(true)
+                                    .splineToSplineHeading(new Pose2d(startPose.getX(), startPose.getY() - (13 * s), startPose.getHeading()), Math.toRadians(90.0 * s))
+                                    .setReversed(false)
                                     .lineTo(new Pose2d(startPose.getX(), 60.0 * s, startPose.getHeading()).vec())
                                     .turn(Math.toRadians(90.0 * s))
                                     .lineTo(new Vector2d(24.0, 59.0 * s))
-                                    .splineToLinearHeading(tagPose, Math.toRadians(-90.0 * s))
+                                    .splineToLinearHeading(tagPose, 0.0)
                                     .build()
                     );
         }
